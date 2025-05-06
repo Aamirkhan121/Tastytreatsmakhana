@@ -11,11 +11,6 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-        secure: false,
-      },
-      '/api': {
         target: 'https://tastytreatsmakhana.onrender.com',
         changeOrigin: true,
         secure: false,
