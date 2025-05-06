@@ -7,35 +7,16 @@ import 'react-toastify/dist/ReactToastify.css';
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const [addingToCartId, setAddingToCartId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const token = localStorage.getItem("token");
-
-        const response = await axios.get('/api/products', {
-          headers: {
-            Authorization: token ? `Bearer ${token}` : ""
-          }
-        });
-
-        // Log the response to inspect structure
-        console.log("Fetched products:", response.data);
-
-        // Adjust according to actual response shape
-        if (Array.isArray(response.data)) {
-          setProducts(response.data);
-        } else if (Array.isArray(response.data.products)) {
-          setProducts(response.data.products);
-        } else {
-          setProducts([]);
-          toast.error("Unexpected response format from server.");
-        }
-
+        const response = await axios.get('/api/products');
+        setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
-        toast.error("Failed to load products. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -46,16 +27,29 @@ const Products = () => {
 
   const handleBuyNow = (product) => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       toast.error("Please login to continue");
       return navigate("/login");
     }
+  
+    navigate("/checkout", { state: { product } });
 
-    // You can store the selected product in localStorage or pass via navigate
-    localStorage.setItem("buyNowItem", JSON.stringify({ ...product, quantity: 1 }));
-    navigate("/checkout?buyNow=true");
+  
+  
+    // try {
+    //   await axios.post(
+    //     "/api/cart/add",
+    //     { product: { ...product, productId: product._id, quantity: 1 } },
+    //     { headers: { Authorization: `Bearer ${token}` } }
+    //   );
+    //   localStorage.setItem("buyNowItem", JSON.stringify({ ...product, quantity: 1 }));
+    //   navigate("/checkout?buyNow=true");
+    // } catch (error) {
+    //   toast.error("Failed to proceed to checkout");
+    //   console.error(error);
+    // }
   };
+  
 
   return (
     <div className="bg-orange-50 py-12 px-6 min-h-screen text-gray-800">
@@ -70,10 +64,10 @@ const Products = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
-          {Array.isArray(products) && products.length === 0 ? (
-            <p className="text-center text-gray-600 col-span-full">No products available.</p>
+          {products.length === 0 ? (
+            <p className="text-center text-gray-600">No products available.</p>
           ) : (
-            Array.isArray(products) && products.map((product) => (
+            products.map((product) => (
               <div
                 key={product._id}
                 className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer transform hover:-translate-y-1"
@@ -89,6 +83,16 @@ const Products = () => {
                   <p className="text-gray-600 mt-2 text-sm">{product.description}</p>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="text-lg font-bold text-orange-800">₹{product.price}</span>
+                    <button
+                      onClick={() => handleAddToCart(product)}
+                      // disabled={addingToCartId === product._id}
+                      // className={`mt-2 px-4 py-2 rounded text-white ${
+                      //   addingToCartId === product._id ? "bg-blue-300" : "bg-blue-500"
+                      // }
+                      // `}
+                    >
+                      {/* {addingToCartId === product._id ? "Adding..." : "Add to Cart"} */}
+                    </button>
                     <button
                       onClick={() => handleBuyNow(product)}
                       className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-full transition duration-200"
@@ -107,3 +111,5 @@ const Products = () => {
 };
 
 export default Products;
+
+
