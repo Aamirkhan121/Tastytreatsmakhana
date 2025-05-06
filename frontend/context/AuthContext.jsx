@@ -6,24 +6,17 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    try {
-      const userData = localStorage.getItem("user");
-  
-      if (userData && userData !== "undefined") {
-        setUser(JSON.parse(userData));
-      } else {
-        // Clear invalid data if found
-        localStorage.removeItem("user");
-        setUser(null);
+   useEffect(() => {
+    // Safely get and parse the user data from localStorage
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData)); // Only parse if userData exists
+      } catch (error) {
+        console.error("Error parsing user data from localStorage", error);
       }
-    } catch (error) {
-      console.error("Error parsing user data from localStorage", error);
-      localStorage.removeItem("user");
-      setUser(null);
     }
   }, []);
-  
 
   const login = async (email, password) => {
     const res = await axios.post("https://tastytreatsmakhana.onrender.com/api/users/login", { email, password },
