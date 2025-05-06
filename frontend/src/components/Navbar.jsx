@@ -34,7 +34,7 @@ const Navbar = () => {
                 onClick={toggleDropdown}
                 className="text-gray-700 font-medium hover:text-blue-600"
               >
-                {user.name} ▼
+                {user?.name} ▼
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-44 bg-white border rounded-md shadow-lg z-50">
@@ -111,7 +111,7 @@ const Navbar = () => {
                 onClick={toggleDropdown}
                 className="text-gray-700 font-medium hover:text-blue-600"
               >
-                {user.name} ▼
+                {user?.name} ▼
               </button>
 
               {isDropdownOpen && (
