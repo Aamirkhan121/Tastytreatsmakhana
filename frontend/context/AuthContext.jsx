@@ -6,12 +6,17 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-   useEffect(() => {
+  useEffect(() => {
     // Safely get and parse the user data from localStorage
     const userData = localStorage.getItem("user");
     if (userData) {
       try {
-        setUser(JSON.parse(userData)); // Only parse if userData exists
+        const parsedUser = JSON.parse(userData);
+        if (parsedUser && parsedUser._id) {  // Check if the user data is valid
+          setUser(parsedUser);  // Set the user state if valid
+        } else {
+          console.warn("Invalid user data found in localStorage");
+        }
       } catch (error) {
         console.error("Error parsing user data from localStorage", error);
       }
@@ -19,30 +24,31 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post("https://tastytreatsmakhana.onrender.com/api/users/login", { email, password },
-                                  {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
-                                );
-  // Store both token and user
-  localStorage.setItem('token', res.data.token);
-  localStorage.setItem('user', JSON.stringify(res.data.user)); // Stringify user before storing
+    const res = await axios.post("https://tastytreatsmakhana.onrender.com/api/users/login", { email, password });
 
-  setUser(res.data.user);
-     console.log("Login success:", res.data);
-  console.log("User in localStorage:", localStorage.getItem("user"));
-  console.log("Token in localStorage:", localStorage.getItem("token"));
+    // Store both token and user if login is successful
+    if (res.data && res.data.token && res.data.user) {
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); // Stringify user before storing
+
+      setUser(res.data.user);
+    } else {
+      console.error("Invalid response from login API.");
+    }
   };
 
   const register = async (name, email, password) => {
     const res = await axios.post("https://tastytreatsmakhana.onrender.com/api/users/register", { name, email, password });
-    // Store both token and user
-  localStorage.setItem('token', res.data.token);
-  localStorage.setItem('user', JSON.stringify(res.data.user)); // Stringify user before storing
 
-  setUser(res.data.user);
+    // Store both token and user if registration is successful
+    if (res.data && res.data.token && res.data.user) {
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user)); // Stringify user before storing
+
+      setUser(res.data.user);
+    } else {
+      console.error("Invalid response from register API.");
+    }
   };
 
   const logout = () => {
