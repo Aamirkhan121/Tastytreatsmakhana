@@ -8,7 +8,7 @@ const About = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("/api/products")
+    axios.get("https://tastytreatsmakhana.onrender.com/api/products")
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("Failed to fetch products", err));
   }, []);
