@@ -7,19 +7,22 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
 
   useEffect(() => {
-    // Safely get and parse the user data from localStorage
-    const userData = localStorage.getItem("user");
 
-    try {
-      if (userData && userData !== "undefined") {
-        setUser(JSON.parse(userData));
-      } else {
-        setUser(null);
-      }
-    } catch (error) {
-      console.error("Error parsing user data from localStorage", error);
-      setUser(null);
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+    if (token && userData) {
+      setUser(JSON.parse(userData));
     }
+    // Safely get and parse the user data from localStorage
+    // const userData = localStorage.getItem('user');
+    // if (userData) {
+    //   try {
+    //     setUser(JSON.parse(userData));  // Ensure JSON parsing is correct
+    //   } catch (error) {
+    //     console.error('Error parsing user data', error);
+    //   }
+    // }
+    
   }, []);
 
   const login = async (email, password) => {
