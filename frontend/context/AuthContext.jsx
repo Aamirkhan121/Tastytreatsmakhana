@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   
 
   const login = async (email, password) => {
-    const res = await axios.post("/api/users/login", { email, password },
+    const res = await axios.post("https://tastytreatsmakhana.onrender.com/api/users/login", { email, password },
                                   {
     headers: {
       "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
-    const res = await axios.post("/api/users/register", { name, email, password });
+    const res = await axios.post("https://tastytreatsmakhana.onrender.com/api/users/register", { name, email, password });
     // Store both token and user
   localStorage.setItem('token', res.data.token);
   localStorage.setItem('user', JSON.stringify(res.data.user)); // Stringify user before storing
