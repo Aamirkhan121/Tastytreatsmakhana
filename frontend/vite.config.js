@@ -15,6 +15,11 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/api': {
+        target: 'https://tastytreatsmakhana.onrender.com',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 })
