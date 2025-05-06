@@ -32,6 +32,9 @@ export const AuthProvider = ({ children }) => {
   localStorage.setItem('user', JSON.stringify(res.data.user)); // Stringify user before storing
 
   setUser(res.data.user);
+     console.log("Login success:", res.data);
+  console.log("User in localStorage:", localStorage.getItem("user"));
+  console.log("Token in localStorage:", localStorage.getItem("token"));
   };
 
   const register = async (name, email, password) => {
