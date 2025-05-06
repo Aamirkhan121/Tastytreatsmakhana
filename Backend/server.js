@@ -17,7 +17,7 @@ connectDB();
 
 const app = express();
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://your-frontend-domain.com']
+    origin: ['http://localhost:5173', 'https://your-frontend-domain.com', 'https://tastycrunchmakhana.onrender.com']
   }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
