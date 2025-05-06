@@ -11,7 +11,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(`/api/products/${productId}`);
+        const response = await axios.get(`https://tastytreatsmakhana.onrender.com/api/products/${productId}`);
         setProduct(response.data);
         setMainImage(response.data.image);
       } catch (error) {
