@@ -41,6 +41,15 @@ const ProductDetails = () => {
 
   const thumbnails = [product.image, ...(product.extraImages || [])];
 
+   const handleBuyNow = (product) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Please login to continue");
+      return navigate("/login");
+    }
+  
+    navigate("/checkout", { state: { product } });
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">
