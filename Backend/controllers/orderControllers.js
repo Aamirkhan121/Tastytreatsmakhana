@@ -27,7 +27,7 @@
 //     res.status(500).json({ message: "Failed to fetch orders", error: err.message });
 //   }
 // };
-import Order from '../models/orderModel.js';
+import Order from '../models/Order.js';
 
 // @desc    Place a new order (COD or Online)
 // @route   POST /api/orders/create
