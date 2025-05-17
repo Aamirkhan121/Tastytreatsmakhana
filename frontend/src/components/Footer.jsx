@@ -64,7 +64,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="mt-10 text-center text-sm text-gray-500 border-t border-orange-100 pt-4">
-      &copy; {new Date().getFullYear()} TastyCrunchyMakhana.com. All rights reserved. <br />
+      &copy; {new Date().getFullYear()} TastyCrunchMakhana.com. All rights reserved. <br />
       Developed by Md Aamir Khan.
       <br />
   Contact: 
