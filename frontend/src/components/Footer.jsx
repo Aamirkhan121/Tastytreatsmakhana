@@ -13,7 +13,7 @@ const Footer = () => {
         {/* Brand Info */}
         <div>
           <h2 className="text-2xl font-extrabold text-orange-700 mb-2">
-            TastyCrunchyMakhana
+            TastyCrunchMakhana
           </h2>
           <p className="text-sm text-gray-600">
             Indulge in the healthiest, crunchiest, and most delicious makhanas,
