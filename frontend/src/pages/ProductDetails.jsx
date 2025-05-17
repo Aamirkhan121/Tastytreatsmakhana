@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+const navigate = useNavigate();
 
 const ProductDetails = () => {
   const { productId } = useParams();
