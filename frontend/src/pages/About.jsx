@@ -18,7 +18,7 @@ const About = () => {
       {/* Hero Section */}
       <section className="bg-orange-50 py-20 text-center px-4">
         <h1 className="text-5xl font-bold text-orange-700 mb-4 tracking-tight">
-          About Tasty Treats Makhana
+          About Tasty Crunch Makhana
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           Elevating India's favorite super-snack with bold flavors, clean ingredients, and love.
@@ -35,7 +35,7 @@ const About = () => {
         <div>
           <h2 className="text-3xl font-semibold text-orange-600 mb-4">Our Story</h2>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Tasty Treats was born from a passion to redefine snacking. We started with a simple idea—make makhanas fun, flavorful, and guilt-free. Sourced from the finest farms and roasted with care, our makhanas are a crunch above the rest.
+            Tasty Crunch was born from a passion to redefine snacking. We started with a simple idea—make makhanas fun, flavorful, and guilt-free. Sourced from the finest farms and roasted with care, our makhanas are a crunch above the rest.
           </p>
         </div>
       </section>
