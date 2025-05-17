@@ -105,9 +105,12 @@ const ProductDetails = () => {
             <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow-md transition duration-300">
               Add to Cart
             </button>
-            <button className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-full shadow-md transition duration-300">
-              Buy Now
-            </button>
+             <button
+                      onClick={() => handleBuyNow(product)}
+                      className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-full transition duration-200"
+                    >
+                      Buy Now
+                    </button>
           </div>
         </div>
       </div>
