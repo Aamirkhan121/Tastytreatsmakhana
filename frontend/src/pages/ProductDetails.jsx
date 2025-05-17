@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-const navigate = useNavigate();
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [products, setProducts] = useState(null);
   const [mainImage, setMainImage] = useState('');
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProductDetails = async () => {
