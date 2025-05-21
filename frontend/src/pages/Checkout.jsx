@@ -410,10 +410,10 @@ const Checkout = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      toast.success("Order placed with Cash on Delivery!");
+      alert("Order placed with Cash on Delivery!");
       navigate("/products");
     } catch (err) {
-      toast.error("Failed to place order");
+      alert("Failed to place order");
     }
   };
 
