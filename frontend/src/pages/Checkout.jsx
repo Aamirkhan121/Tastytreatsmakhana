@@ -396,7 +396,7 @@ const Checkout = () => {
 
     try {
       await axios.post(
-        "/api/orders/create",
+        "https://tastytreatsmakhana.onrender.com/api/orders/create",
         {
           productId: product._id,
           quantity: 1,
@@ -430,7 +430,7 @@ const Checkout = () => {
 
     try {
       const orderResponse = await axios.post(
-        "/api/payment/order",
+        "https://tastytreatsmakhana.onrender.com/api/payment/order",
         {
           amount: product.price * 100, // amount in paise
           currency: "INR",
@@ -453,7 +453,7 @@ const Checkout = () => {
         handler: async function (response) {
           try {
             await axios.post(
-              "/api/orders/create",
+              "https://tastytreatsmakhana.onrender.com/api/orders/create",
               {
                 productId: product._id,
                 quantity: 1,
