@@ -19,7 +19,7 @@ const Contact = () => {
     };
 
     try {
-      const response = await axios.post("/api/contact/submit", contactData);
+      const response = await axios.post("https://tastytreatsmakhana.onrender.com/api/contact/submit", contactData);
       if (response.data.success) {
         setStatus("Thank you for reaching out! We will get back to you soon.");
         setName("");

@@ -29,12 +29,12 @@ const Home = () => {
           {/* Product 1 */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-2xl shadow-lg hover:shadow-2xl p-6 transition duration-300">
             <img
-              src="/Per_Peri.webp"
+              src="https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095327_kvwqat.png"
               alt="Peri Peri Makhana"
               className="w-full h-56 object-cover rounded-xl"
             />
             <h3 className="text-xl font-semibold mt-5 text-yellow-800">
-              Farmley Peri Peri Roasted Makhana in Olive Oil (77g)
+              Farmley Peri Peri Roasted Makhana in Olive Oil (60g)
             </h3>
             <p className="text-gray-600 mt-2">A spicy and flavorful delight!</p>
           </div>
@@ -42,7 +42,7 @@ const Home = () => {
           {/* Product 2 */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-2xl shadow-lg hover:shadow-2xl p-6 transition duration-300">
             <img
-              src="/Cream_onion.webp"
+              src="https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095211_jvwnuh.png"
               alt="Cream & Onion Makhana"
               className="w-full h-56 object-cover rounded-xl"
             />
@@ -55,14 +55,14 @@ const Home = () => {
           {/* Product 3 */}
           <div className="bg-yellow-50 border border-yellow-200 rounded-2xl shadow-lg hover:shadow-2xl p-6 transition duration-300">
             <img
-              src="/Vedaka_fox.webp"
-              alt="Vedaka Fox Nuts"
+              src="https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095359_uhapen.png"
+              alt="Himalayan Salted"
               className="w-full h-56 object-cover rounded-xl"
             />
             <h3 className="text-xl font-semibold mt-5 text-yellow-800">
-              Vedaka Phool Makhana | 200g | No Artificial Flavours
+             Himalayan Salted| 60g | 
             </h3>
-            <p className="text-gray-600 mt-2">Simple, crunchy, and preservative-free.</p>
+            <p className="text-gray-600 mt-2">Simple, crunchy, and preservative-free. Lightly seasoned with Himalayan Salt.</p>
           </div>
         </div>
       </section>

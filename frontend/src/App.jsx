@@ -14,7 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Footer from './components/Footer'
 import MyOrder from './pages/MyOrder'
 // import AdminOrders from './pages/AdminOrders'
-// import Checkout from './pages/Checkout'
+ import Checkout from './pages/Checkout'
 // import CartPage from './pages/CartPage'
 // import { CartProvider } from '../context/CartContext'
 // import Checkout from './components/CheckOut'
@@ -52,7 +52,7 @@ const App = () => {
            <Route  path="/profile"  element={<ProtectedRoute> <ProfilePage /> </ProtectedRoute> }/>
            <Route path="/my-orders" element={<ProtectedRoute> <MyOrder /> </ProtectedRoute>} /> 
            {/* <Route path='/admin' element={<AdminOrders/>}/> */}
-           {/* <Route path='/checkout' element={<Checkout/>}/> */}
+            <Route path='/checkout' element={<Checkout/>}/> 
            {/* checkout */}
            {/* <Route path="/checkout" element={<Checkout/>} />
            <Route path="/payment-success" element={<h2>Payment Success!</h2>} /> */}

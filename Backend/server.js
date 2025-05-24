@@ -17,7 +17,7 @@ connectDB();
 
 const app = express();
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://your-frontend-domain.com']
+    origin: ['http://localhost:5173',  'https://tastycrunchmakhana.onrender.com','https://tastycrunchmakhana.com']
   }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -34,11 +34,24 @@ app.post("/api/payment/order", async(req,res)=>{
       key_secret: process.env.RAZORPAY_SECRET_KEY,
     });
 
-    const options=req.body
-  const order = await razorpay.orders.create(options);
-  if (!order) {
-    return res.status(500).json({ error: 'Something went wrong' });
-  }
+
+        const options = {
+      amount: req.body.amount,
+      currency: req.body.currency,
+      receipt: req.body.receipt,
+    };
+
+    const order = await razorpay.orders.create(options);
+
+    if (!order) {
+      return res.status(500).json({ error: 'Something went wrong' });
+    }
+
+  //   const options=req.body
+  // const order = await razorpay.orders.create(options);
+  // if (!order) {
+  //   return res.status(500).json({ error: 'Something went wrong' });
+  // }
 
 res.status(200).json(order)
   } catch (error) {

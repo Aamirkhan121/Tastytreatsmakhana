@@ -13,7 +13,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('/api/products');
+        const response = await axios.get('https://tastytreatsmakhana.onrender.com/api/products');
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);

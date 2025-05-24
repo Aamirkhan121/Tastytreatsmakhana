@@ -13,7 +13,7 @@ const Footer = () => {
         {/* Brand Info */}
         <div>
           <h2 className="text-2xl font-extrabold text-orange-700 mb-2">
-            TastyCrunchyMakhana
+            TastyCrunchMakhana
           </h2>
           <p className="text-sm text-gray-600">
             Indulge in the healthiest, crunchiest, and most delicious makhanas,
@@ -64,7 +64,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="mt-10 text-center text-sm text-gray-500 border-t border-orange-100 pt-4">
-      &copy; {new Date().getFullYear()} TastyCrunchyMakhana.com. All rights reserved. <br />
+      &copy; {new Date().getFullYear()} TastyCrunchMakhana.com. All rights reserved. <br />
       Developed by Md Aamir Khan.
       <br />
   Contact: 
