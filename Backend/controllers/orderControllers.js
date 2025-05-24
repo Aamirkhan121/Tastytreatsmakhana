@@ -140,3 +140,12 @@ export const placeOrder = async (req, res) => {
   }
 };
 
+export const getMyOrders = async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user._id }).populate("productId", "name price");
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch user orders", error: err.message });
+  }
+}
+
