@@ -8,7 +8,7 @@ const MyOrder = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('https://tastytreatsmakhana.onrender.com//api/orders/my', {
+      const res = await axios.get('https://tastytreatsmakhana.onrender.com/api/orders/my', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
