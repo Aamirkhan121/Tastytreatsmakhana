@@ -12,6 +12,7 @@ import RegisterPage from './pages/RegisterPage'
 import ProfilePage from './pages/ProfilePage'
 import ProtectedRoute from './components/ProtectedRoute'
 import Footer from './components/Footer'
+import MyOrder from './pages/MyOrder'
 // import AdminOrders from './pages/AdminOrders'
 // import Checkout from './pages/Checkout'
 // import CartPage from './pages/CartPage'
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
            {/* Protected Routes */}
            <Route  path="/profile"  element={<ProtectedRoute> <ProfilePage /> </ProtectedRoute> }/>
+           <Route path="/my-orders" element={<ProtectedRoute> <MyOrder /> </ProtectedRoute>} /> 
            {/* <Route path='/admin' element={<AdminOrders/>}/> */}
            {/* <Route path='/checkout' element={<Checkout/>}/> */}
            {/* checkout */}

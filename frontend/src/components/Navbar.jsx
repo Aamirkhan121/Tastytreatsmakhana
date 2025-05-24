@@ -45,6 +45,13 @@ const Navbar = () => {
                   >
                     👤 Profile
                   </Link>
+                <Link
+                    to="/my-orders"
+                  onClick={closeDropdown}
+                  className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                  📦 My Orders
+                </Link>
                   <button
                     onClick={() => {
                       logout();
@@ -126,6 +133,13 @@ const Navbar = () => {
                   >
                     👤 Profile
                   </Link>
+                  <Link
+                      to="/my-orders"
+                      onClick={closeDropdown}
+                      className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    📦 My Orders
+                    </Link>
                   <button
                     onClick={() => {
                       logout();
