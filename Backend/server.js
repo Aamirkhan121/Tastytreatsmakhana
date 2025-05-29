@@ -27,7 +27,7 @@ app.use('/api/products', productRouter);
 app.use('/api/contact',contactRouter);
 app.use('/api/users', userRouter); // Assuming you have a userRouter for authentication
 app.use('/api/orders', orderRouter ); // Assuming you have an orderRouter for order operations
-app.post("/api/payment/order", async(req,res)=>{
+app.post("/api/payment/online", async(req,res)=>{
   try {
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
