@@ -444,8 +444,8 @@ const Checkout = () => {
       const order = orderResponse.data;
 
       const options = {
-        key: "rzp_test_ZvFAtBhVLTj8kz",
-        // key: process.env.REACT_APP_RAZORPAY_KEY || "rzp_test_ZvFAtBhVLTj8kz",
+        // key: "rzp_test_ZvFAtBhVLTj8kz",
+        key: process.env.REACT_APP_RAZORPAY_KEY || "rzp_test_ZvFAtBhVLTj8kz",
         amount: order.amount,
         currency: order.currency,
         name: "Tasty Crunch",
