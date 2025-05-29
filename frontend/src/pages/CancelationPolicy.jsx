@@ -16,7 +16,7 @@ const CancellationPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">2. How to Cancel</h2>
       <p className="mb-4">
-        To cancel, email <strong>support@tastycrunchmakhana.com</strong> with your order ID within 1 hour.
+        To cancel, email <strong>wecaretastycrunch@gmail.com</strong> with your order ID within 1 hour.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">3. Refunds</h2>
