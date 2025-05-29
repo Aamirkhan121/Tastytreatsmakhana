@@ -16,7 +16,7 @@ const RefundPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">2. Process</h2>
       <p className="mb-4">
-        Email us at <strong>support@tastycrunchmakhana.com</strong> with your order ID and photo proof.
+        Email us at <strong>wecaretastycrunch@gmail.com</strong> with your order ID and photo proof.
       </p>
 
       <h2 className="text-xl font-semibold mt-6 mb-2">3. Timeframe</h2>
