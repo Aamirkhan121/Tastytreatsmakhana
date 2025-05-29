@@ -4,7 +4,8 @@ import {
   login,
   logout,
   updateUser,
-  deleteUser
+  deleteUser,
+  getAllUsers
   
 } from "../controllers/authControllers.js";
 
@@ -15,6 +16,7 @@ router.post("/login", login);
 router.get("/logout", logout);
 router.patch("/update/:id", updateUser);
 router.delete("/delete/:id", deleteUser);
+router.get("/allusers", getAllUsers);
 
 
 
