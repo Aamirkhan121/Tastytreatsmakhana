@@ -60,6 +60,10 @@ const MyOrder = () => {
                 {order.productId?.name || 'Unknown Product'}
               </h2>
 
+              <p className="text-sm text-gray-500 mb-2 break-all">
+                <span className="font-medium">Order ID:</span> {order._id}
+              </p>
+
               <ul className="text-sm text-gray-700 space-y-1">
                 <li>
                   <span className="font-medium">Quantity:</span> {order.quantity}
@@ -95,3 +99,4 @@ const MyOrder = () => {
 };
 
 export default MyOrder;
+
