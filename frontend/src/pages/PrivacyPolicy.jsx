@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">4. Contact</h2>
       <p className="mb-4">
-        For privacy concerns, email us at <strong>support@tastycrunchmakhana.com</strong>.
+        For privacy concerns, email us at <strong>wecaretastycrunch@gmail.com</strong>.
       </p>
     </div>
   );
