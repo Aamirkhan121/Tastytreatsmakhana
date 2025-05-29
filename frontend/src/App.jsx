@@ -15,6 +15,10 @@ import Footer from './components/Footer'
 import MyOrder from './pages/MyOrder'
 // import AdminOrders from './pages/AdminOrders'
  import Checkout from './pages/Checkout'
+import TermsAndConditions from './pages/TermsAndConditions'
+import RefundPolicy from './pages/RefundPolicy'
+import CancellationPolicy from './pages/CancelationPolicy'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 // import CartPage from './pages/CartPage'
 // import { CartProvider } from '../context/CartContext'
 // import Checkout from './components/CheckOut'
@@ -53,6 +57,10 @@ const App = () => {
            <Route path="/my-orders" element={<ProtectedRoute> <MyOrder /> </ProtectedRoute>} /> 
            {/* <Route path='/admin' element={<AdminOrders/>}/> */}
             <Route path='/checkout' element={<Checkout/>}/> 
+            <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/cancellation-policy" element={<CancellationPolicy />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
            {/* checkout */}
            {/* <Route path="/checkout" element={<Checkout/>} />
            <Route path="/payment-success" element={<h2>Payment Success!</h2>} /> */}
