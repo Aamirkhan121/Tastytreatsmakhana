@@ -1,30 +1,61 @@
-import React from 'react';
+import React from "react";
 
 const RefundPolicy = () => {
   return (
-    <div className="container mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-6">Refund Policy</h1>
+    <main className="max-w-4xl mx-auto px-6 py-12 sm:px-8 lg:px-12">
+      <article>
+        <header>
+          <h1 className="text-4xl font-extrabold text-gray-900 mb-8">
+            Refund Policy
+          </h1>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            At <strong>Tasty Crunch Makhana</strong>, we strive to deliver fresh
+            and tasty products. However, if you are not satisfied, please review
+            our refund policy below.
+          </p>
+        </header>
 
-      <p className="mb-4">
-        At <strong>Tasty Crunch Makhana</strong>, we strive to deliver fresh and tasty products. However, if you are not satisfied, our refund policy is as follows:
-      </p>
+        <section className="mt-10">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3" id="eligibility">
+            1. Eligibility
+          </h2>
+          <p className="text-gray-700 leading-relaxed">
+            You may request a refund within{" "}
+            <strong>7 days</strong> of delivery if the product is damaged,
+            expired, or incorrect.
+          </p>
+        </section>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">1. Eligibility</h2>
-      <p className="mb-4">
-        You may request a refund within <strong>7 days</strong> of delivery if the product is damaged, expired, or incorrect.
-      </p>
+        <section className="mt-10">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3" id="process">
+            2. Process
+          </h2>
+          <p className="text-gray-700 leading-relaxed">
+            Email us at{" "}
+            <a
+              href="mailto:wecaretastycrunch@gmail.com"
+              className="text-blue-600 hover:underline"
+              aria-label="Send email to wecaretastycrunch@gmail.com"
+            >
+              wecaretastycrunch@gmail.com
+            </a>{" "}
+            with your order ID and photo proof.
+          </p>
+        </section>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">2. Process</h2>
-      <p className="mb-4">
-        Email us at <strong>wecaretastycrunch@gmail.com</strong> with your order ID and photo proof.
-      </p>
-
-      <h2 className="text-xl font-semibold mt-6 mb-2">3. Timeframe</h2>
-      <p className="mb-4">
-        Approved refunds will be processed within <strong>7–10 business days</strong> to your original payment method.
-      </p>
-    </div>
+        <section className="mt-10">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3" id="timeframe">
+            3. Timeframe
+          </h2>
+          <p className="text-gray-700 leading-relaxed">
+            Approved refunds will be processed within{" "}
+            <strong>7–10 business days</strong> to your original payment method.
+          </p>
+        </section>
+      </article>
+    </main>
   );
 };
 
 export default RefundPolicy;
+
