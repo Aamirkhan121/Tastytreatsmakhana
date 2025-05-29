@@ -430,7 +430,7 @@ const Checkout = () => {
 
     try {
       const orderResponse = await axios.post(
-        "https://tastytreatsmakhana.onrender.com/api/payment/order",
+        "https://tastytreatsmakhana.onrender.com/api/payment/online",
         {
           amount: product.price * 100, // amount in paise
           currency: "INR",
