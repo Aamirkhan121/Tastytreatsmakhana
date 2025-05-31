@@ -55,7 +55,7 @@ app.post("/api/payment/order", async(req,res)=>{
 
 res.status(200).json(order)
   } catch (error) {
-      console.error("Error in /api/payment/order route:", error);
+      console.error("Error", error);
      res.status(500).json({ message: "Internal server error", error: error.message });
     
   }
