@@ -36,7 +36,7 @@ app.post("/api/payment/order", async(req,res)=>{
 
 
         const options = {
-      amount: req.body.amount * 100, // Razorpay needs amount in paise
+      amount: req.body.amount , // Razorpay needs amount in paise
       currency: req.body.currency || "INR",
       receipt: req.body.receipt || `receipt_order_${Date.now()}`,
     };
