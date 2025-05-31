@@ -430,7 +430,7 @@ const Checkout = () => {
 
     try {
       const orderResponse = await axios.post(
-        "https://tastytreatsmakhana.onrender.com/api/payment/online",
+        "https://tastytreatsmakhana.onrender.com/api/payment/order",
         {
           amount: product.price * 100, // amount in paise
           currency: "INR",
@@ -464,7 +464,7 @@ const Checkout = () => {
                 address,
                 paymentMethod: "Online",
                 paymentInfo: {
-                  id: response.razorpay_payment_id,
+                  id:response.razorpay_payment_id,
                   order_id: response.razorpay_order_id,
                   signature: response.razorpay_signature,
                 },
