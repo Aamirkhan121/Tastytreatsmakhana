@@ -36,11 +36,10 @@ app.post("/api/payment/order", async(req,res)=>{
 
 
         const options = {
-      amount: req.body.amount,
-      currency: req.body.currency,
-      receipt: req.body.receipt,
+      amount: req.body.amount * 100, // Razorpay needs amount in paise
+      currency: req.body.currency || "INR",
+      receipt: req.body.receipt || `receipt_order_${Date.now()}`,
     };
-
     const order = await razorpay.orders.create(options);
 
     if (!order) {
