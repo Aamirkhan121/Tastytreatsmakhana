@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/create',protect, placeOrder);
 router.get('/my', protect, getMyOrders);
-router.get('/admin', protect, getAllOrders);
+router.get('/admin', getAllOrders);
 // router.get('/admin', protect, isAdmin, getAllOrders);
 
 export default router;
