@@ -5,7 +5,7 @@ import { createProduct, getProductById, getProducts } from '../controllers/produ
 const router = express.Router();
 router.get('/', getProducts);
 router.post('/',createProduct)
-router.put('/',updateProduct)
+router.put('/:id',updateProduct)
 router.get('/:id', getProductById); // Assuming you want to get a product by ID as well
 
 export default router;
