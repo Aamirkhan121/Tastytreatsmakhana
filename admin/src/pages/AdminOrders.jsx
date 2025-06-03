@@ -9,6 +9,7 @@ const AdminOrders = () => {
       const { data } = await axios.get(
         "https://tastytreatsmakhana.onrender.com/api/orders/admin"
       );
+      console.log(">>> raw orders:", data);
       setOrders(data);
     } catch (error) {
       console.error("Error fetching orders:", error);
@@ -49,6 +50,7 @@ const AdminOrders = () => {
                 ))}
               </tr>
             </thead>
+
             <tbody className="divide-y divide-gray-100">
               {orders.length > 0 ? (
                 orders.map((order, idx) => (
@@ -56,25 +58,38 @@ const AdminOrders = () => {
                     key={order._id}
                     className={idx % 2 === 0 ? "bg-gray-50" : "bg-white"}
                   >
+                    {/* Render the order’s own ID */}
                     <td className="py-3 px-6 text-sm text-gray-700 font-mono max-w-[150px] truncate">
                       {order._id}
                     </td>
+
+                    {/* If your API returns a nested `user` object, use order.user.name */}
                     <td className="py-3 px-6 text-sm text-gray-700 max-w-[120px] truncate">
-                      {order.name}
+                      {order.user?.name || "—"} 
                     </td>
+
+                    {/* Since productId is an object, choose one field (e.g. its _id or its name) */}
                     <td className="py-3 px-6 text-sm text-gray-700 font-mono max-w-[150px] truncate">
-                      {order.productId}
+                      {order.productId?._id || "—"}
+                      {/* or {order.productId?.name} if you prefer */}
                     </td>
-                    <td className="py-3 px-6 text-sm text-gray-700">{order.quantity}</td>
+
+                    <td className="py-3 px-6 text-sm text-gray-700">
+                      {order.quantity}
+                    </td>
+
                     <td className="py-3 px-6 text-sm text-gray-700 max-w-[130px] truncate">
                       {order.paymentMethod}
                     </td>
+
                     <td className="py-3 px-6 text-sm text-gray-700 max-w-[180px] truncate">
                       {order.email}
                     </td>
+
                     <td className="py-3 px-6 text-sm text-gray-700 max-w-[130px] truncate">
                       {order.phone}
                     </td>
+
                     <td className="py-3 px-6 text-sm text-gray-700 max-w-[250px] truncate">
                       {order.address}
                     </td>
@@ -99,4 +114,5 @@ const AdminOrders = () => {
 };
 
 export default AdminOrders;
+
 
