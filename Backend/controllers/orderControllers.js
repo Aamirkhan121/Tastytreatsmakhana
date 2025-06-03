@@ -152,6 +152,7 @@ export const getMyOrders = async (req, res) => {
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({});
+    .populate('productId', 'name image')
     res.json(orders);
   } catch (err) {
     res.status(500).json({ message: "Failed to fetch orders", error: err.message });
