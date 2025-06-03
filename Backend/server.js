@@ -38,11 +38,10 @@ app.post("/api/payment/order", async(req,res)=>{
 
 
         const options = {
-      amount: req.body.amount,
-      currency: req.body.currency,
-      receipt: req.body.receipt,
+      amount: req.body.amount , // Razorpay needs amount in paise
+      currency: req.body.currency || "INR",
+      receipt: req.body.receipt || `receipt_order_${Date.now()}`,
     };
-
     const order = await razorpay.orders.create(options);
 
     if (!order) {
@@ -57,8 +56,8 @@ app.post("/api/payment/order", async(req,res)=>{
 
 res.status(200).json(order)
   } catch (error) {
-    console.log(error);
-    res.status(500).json({message:"Internal server error"})
+      console.error("Error", error);
+     res.status(500).json({ message: "Internal server error", error: error.message });
     
   }
 }); // Assuming you have a paymentRouter for payment operations

@@ -444,7 +444,8 @@ const Checkout = () => {
       const order = orderResponse.data;
 
       const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY || "rzp_test_0ors0RHmicSm9m",
+        // key: "rzp_test_ZvFAtBhVLTj8kz",
+        key: process.env.REACT_APP_RAZORPAY_KEY || "rzp_test_AIdlEiNS0QXnLJ",
         amount: order.amount,
         currency: order.currency,
         name: "Tasty Crunch",
@@ -463,7 +464,7 @@ const Checkout = () => {
                 address,
                 paymentMethod: "Online",
                 paymentInfo: {
-                  id: response.razorpay_payment_id,
+                  id:response.razorpay_payment_id,
                   order_id: response.razorpay_order_id,
                   signature: response.razorpay_signature,
                 },
