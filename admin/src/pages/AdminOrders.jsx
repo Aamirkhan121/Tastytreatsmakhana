@@ -65,7 +65,7 @@ const AdminOrders = () => {
 
                     {/* If your API returns a nested `user` object, use order.user.name */}
                     <td className="py-3 px-6 text-sm text-gray-700 max-w-[120px] truncate">
-                      {order.user?.name || "—"} 
+                      {order.name} 
                     </td>
 
                     {/* Since productId is an object, choose one field (e.g. its _id or its name) */}
