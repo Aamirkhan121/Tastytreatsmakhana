@@ -4,6 +4,7 @@ import axios from 'axios';
 const MyOrder = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cancellingId, setCancellingId] = useState(null);
 
   const fetchOrders = async () => {
     try {
@@ -24,6 +25,37 @@ const MyOrder = () => {
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  const handleCancel = async (orderId) => {
+    const reason = window.prompt('Please enter the reason for cancellation:');
+    if (!reason) {
+      alert('Cancellation reason is required.');
+      return;
+    }
+
+    try {
+      setCancellingId(orderId);
+      const token = localStorage.getItem('token');
+
+      await axios.patch(
+        `https://tastytreatsmakhana.onrender.com/api/orders/cancel/${orderId}`,
+        { status: 'Cancelled', cancelReason: reason },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert('Order cancelled successfully.');
+      fetchOrders(); // refresh orders
+    } catch (err) {
+      console.error('Failed to cancel order:', err);
+      alert('Failed to cancel the order. Please try again.');
+    } finally {
+      setCancellingId(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -60,10 +92,6 @@ const MyOrder = () => {
                 {order.productId?.name || 'Unknown Product'}
               </h2>
 
-              <p className="text-sm text-gray-500 mb-2 break-all">
-                <span className="font-medium">Order ID:</span> {order._id}
-              </p>
-
               <ul className="text-sm text-gray-700 space-y-1">
                 <li>
                   <span className="font-medium">Quantity:</span> {order.quantity}
@@ -79,6 +107,8 @@ const MyOrder = () => {
                         ? 'bg-green-500'
                         : order.status === 'Pending'
                         ? 'bg-yellow-500'
+                        : order.status === 'Cancelled'
+                        ? 'bg-red-500'
                         : 'bg-blue-500'
                     }`}
                   >
@@ -89,7 +119,25 @@ const MyOrder = () => {
                   <span className="font-medium">Date:</span>{' '}
                   {new Date(order.createdAt).toLocaleDateString()}
                 </li>
+
+                {/* Show cancel reason if order cancelled */}
+                {order.status === 'Cancelled' && order.cancelReason && (
+                  <li>
+                    <span className="font-medium">Cancel Reason:</span> {order.cancelReason}
+                  </li>
+                )}
               </ul>
+
+              {/* Cancel button - only if order not delivered or cancelled */}
+              {order.status !== 'Delivered' && order.status !== 'Cancelled' && (
+                <button
+                  onClick={() => handleCancel(order._id)}
+                  disabled={cancellingId === order._id}
+                  className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {cancellingId === order._id ? 'Cancelling...' : 'Cancel Order'}
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -99,4 +147,3 @@ const MyOrder = () => {
 };
 
 export default MyOrder;
-
