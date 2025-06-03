@@ -157,3 +157,22 @@ export const getAllOrders = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch orders", error: err.message });
   }
 };
+
+export const updateOrderStatus = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Either read from body or default to “Delivered”
+    const newStatus = req.body.status || 'Delivered';
+    order.status = newStatus;
+    await order.save();
+
+    return res.json({ message: `Order status updated to ${newStatus}`, order });
+  } catch (error) {
+    console.error('Failed to update order status:', error);
+    return res.status(500).json({ message: 'Failed to update status', error: error.message });
+  }
+};
