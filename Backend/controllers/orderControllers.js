@@ -182,21 +182,23 @@ export const updateOrderStatus = async (req, res) => {
 
 export const cancelOrder = async (req, res) => {
   const orderId = req.params.id;
-  const { cancelReason } = req.body;
+  const { cancellationReason } = req.body;  // use the exact field name
 
-  if (!cancelReason || cancelReason.trim() === '') {
-    return res.status(400).json({ message: 'Cancel reason is required' });
+  if (!cancellationReason || cancellationReason.trim() === '') {
+    return res.status(400).json({ message: 'Cancellation reason is required' });
+  }
+
+  if (!req.user) {
+    return res.status(401).json({ message: 'User not authenticated' });
   }
 
   try {
     const order = await Order.findById(orderId);
-
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
 
-    // Check if order belongs to logged-in user
-    if (order.user.toString() !== req.user._id.toString()) {
+    if (order.userId.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Not authorized to cancel this order' });
     }
 
@@ -209,12 +211,13 @@ export const cancelOrder = async (req, res) => {
     }
 
     order.status = 'Cancelled';
-    order.cancelReason = cancelReason;
+    order.cancellationReason = cancellationReason;  // use the exact field name
+
     await order.save();
 
     res.json({ message: 'Order cancelled successfully', order });
   } catch (error) {
     console.error('Error cancelling order:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
