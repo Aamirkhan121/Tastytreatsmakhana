@@ -21,6 +21,8 @@ const AdminNavbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-10 text-gray-700 font-medium text-lg">
           <Link to="/" className="hover:text-blue-600 transition duration-300">Dashboard</Link>
+          <Link to="/admin/orders" className="hover:text-blue-600 transition duration-300">AllOrders</Link>
+          <Link to="/admin/order/update" className="hover:text-blue-600 transition duration-300">UpdateOrder</Link>
           <Link to="/admin/products" className="hover:text-blue-600 transition duration-300">Products</Link>
           <Link to="/admin/products/new" className="hover:text-blue-600 transition duration-300">Add Product</Link>
         </div>
@@ -43,6 +45,9 @@ const AdminNavbar = () => {
           >
             Dashboard
           </Link>
+          <Link to="/admin/orders" onClick={closeMenu} className="block text-gray-700 font-medium hover:text-blue-600">AllOrders</Link>
+          <Link to="/admin/order/update" onClick={closeMenu} className="block text-gray-700 font-medium hover:text-blue-600">UpdateOrder</Link>
+
           <Link
             to="/admin/products"
             onClick={closeMenu}
