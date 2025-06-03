@@ -39,7 +39,7 @@ const MyOrder = () => {
 
       await axios.patch(
         `https://tastytreatsmakhana.onrender.com/api/orders/cancel/${orderId}`,
-        { status: 'Cancelled', cancelReason: reason },
+        { status: 'Cancelled', cancellationReason : reason },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -121,9 +121,9 @@ const MyOrder = () => {
                 </li>
 
                 {/* Show cancel reason if order cancelled */}
-                {order.status === 'Cancelled' && order.cancelReason && (
+                {order.status === 'Cancelled' && order.cancellationReason  && (
                   <li>
-                    <span className="font-medium">Cancel Reason:</span> {order.cancelReason}
+                    <span className="font-medium">Cancel Reason:</span> {order.cancellationReason }
                   </li>
                 )}
               </ul>
