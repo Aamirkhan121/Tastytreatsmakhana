@@ -24,9 +24,25 @@ const orderSchema = new mongoose.Schema({
 
   status: {
     type: String,
-    enum: ["Pending", "Delivered"],
+    enum: [
+      "Pending",       // Order placed, awaiting confirmation
+      "Confirmed",     // Order confirmed by seller
+      "Processed",     // Order packed, preparing for shipping
+      "Shipped",       // Order dispatched to courier
+      "Out for Delivery", // Courier out for delivery
+      "Delivered",     // Order delivered to customer
+      "Cancelled"      // Order cancelled (by user or admin)
+    ],
     default: "Pending"
-  }
+  },
+
+  shippingDetails: {
+    courierName: { type: String, default: "" },        // Courier company name
+    trackingNumber: { type: String, default: "" },     // Tracking number
+    expectedDelivery: { type: Date, default: null },   // Expected delivery date
+  },
+
+  cancellationReason: { type: String, default: "" },
 }, {
   timestamps: true
 });
