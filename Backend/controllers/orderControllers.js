@@ -176,3 +176,45 @@ export const updateOrderStatus = async (req, res) => {
     return res.status(500).json({ message: 'Failed to update status', error: error.message });
   }
 };
+
+
+
+
+export const cancelOrder = async (req, res) => {
+  const orderId = req.params.id;
+  const { cancelReason } = req.body;
+
+  if (!cancelReason || cancelReason.trim() === '') {
+    return res.status(400).json({ message: 'Cancel reason is required' });
+  }
+
+  try {
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // Check if order belongs to logged-in user
+    if (order.user.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to cancel this order' });
+    }
+
+    if (order.status === 'Delivered') {
+      return res.status(400).json({ message: 'Delivered orders cannot be cancelled' });
+    }
+
+    if (order.status === 'Cancelled') {
+      return res.status(400).json({ message: 'Order is already cancelled' });
+    }
+
+    order.status = 'Cancelled';
+    order.cancelReason = cancelReason;
+    await order.save();
+
+    res.json({ message: 'Order cancelled successfully', order });
+  } catch (error) {
+    console.error('Error cancelling order:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
