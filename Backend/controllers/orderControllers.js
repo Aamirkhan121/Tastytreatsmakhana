@@ -151,7 +151,7 @@ export const getMyOrders = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({});
+    const orders = await Order.find({})
     .populate('productId', 'name image')
     res.json(orders);
   } catch (err) {
