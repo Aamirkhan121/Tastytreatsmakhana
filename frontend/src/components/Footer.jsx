@@ -5,6 +5,7 @@ import {
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
+import logo from "../assets/tastycrunch-logo.jpg"; // Ensure the path is correct
 
 const Footer = () => {
   return (
@@ -14,9 +15,16 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand Info */}
           <div>
-            <h2 className="text-2xl font-extrabold text-orange-700 mb-2">
-              TastyCrunchMakhana
-            </h2>
+           <div className="flex items-center space-x-3 mb-3">
+              <img
+                src={logo}
+                alt="TastyCrunch Logo"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <h2 className="text-2xl font-extrabold text-orange-700 md:text-sm">
+                TastyCrunchMakhana
+              </h2>
+            </div>
             <p className="text-sm text-gray-600">
               Indulge in the healthiest, crunchiest, and most delicious makhanas,
               packed with flavor and nutrition.

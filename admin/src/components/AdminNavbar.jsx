@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "../assets/tastycrunch-logo.jpg"; // Make sure the path is correct
 
 const AdminNavbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu toggle
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
@@ -11,20 +12,50 @@ const AdminNavbar = () => {
   return (
     <nav className="bg-white shadow-lg fixed w-full top-0 z-50 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <div className="text-2xl md:text-3xl font-extrabold text-blue-700 tracking-wide">
-          <Link to="/" className="hover:text-blue-500 transition duration-300">
+        {/* Logo and Brand Name */}
+        <div className="flex items-center space-x-2">
+          <img
+            src={logo}
+            alt="TastyCrunch Logo"
+            className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-full"
+          />
+          <Link
+            to="/"
+            className="text-2xl md:text-3xl font-extrabold text-blue-700 tracking-wide hover:text-blue-500 transition duration-300"
+          >
             TastyCrunch
           </Link>
         </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-10 text-gray-700 font-medium text-lg">
-          <Link to="/" className="hover:text-blue-600 transition duration-300">Dashboard</Link>
-          <Link to="/admin/orders" className="hover:text-blue-600 transition duration-300">AllOrders</Link>
-          <Link to="/admin/order/update" className="hover:text-blue-600 transition duration-300">UpdateOrder</Link>
-          <Link to="/admin/products" className="hover:text-blue-600 transition duration-300">Products</Link>
-          <Link to="/admin/products/new" className="hover:text-blue-600 transition duration-300">Add Product</Link>
+          <Link to="/" className="hover:text-blue-600 transition duration-300">
+            Dashboard
+          </Link>
+          <Link
+            to="/admin/orders"
+            className="hover:text-blue-600 transition duration-300"
+          >
+            AllOrders
+          </Link>
+          <Link
+            to="/admin/order/update"
+            className="hover:text-blue-600 transition duration-300"
+          >
+            UpdateOrder
+          </Link>
+          <Link
+            to="/admin/products"
+            className="hover:text-blue-600 transition duration-300"
+          >
+            Products
+          </Link>
+          <Link
+            to="/admin/products/new"
+            className="hover:text-blue-600 transition duration-300"
+          >
+            Add Product
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -45,9 +76,20 @@ const AdminNavbar = () => {
           >
             Dashboard
           </Link>
-          <Link to="/admin/orders" onClick={closeMenu} className="block text-gray-700 font-medium hover:text-blue-600">AllOrders</Link>
-          <Link to="/admin/order/update" onClick={closeMenu} className="block text-gray-700 font-medium hover:text-blue-600">UpdateOrder</Link>
-
+          <Link
+            to="/admin/orders"
+            onClick={closeMenu}
+            className="block text-gray-700 font-medium hover:text-blue-600"
+          >
+            AllOrders
+          </Link>
+          <Link
+            to="/admin/order/update"
+            onClick={closeMenu}
+            className="block text-gray-700 font-medium hover:text-blue-600"
+          >
+            UpdateOrder
+          </Link>
           <Link
             to="/admin/products"
             onClick={closeMenu}
