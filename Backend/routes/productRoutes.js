@@ -8,7 +8,7 @@ router.post('/',createProduct)
 router.put('/:id',updateProduct)
 router.get('/:id', getProductById); // Assuming you want to get a product by ID as well
 // Example Express route
-router.delete("/delete/:id");
+router.delete("/delete/:id",deleteProduct);
 
 
 export default router;
