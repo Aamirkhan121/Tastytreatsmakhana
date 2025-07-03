@@ -380,10 +380,22 @@ const Checkout = () => {
     address: "",
   });
 
+  const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(product?.price || 0);
+
   const token = localStorage.getItem("token");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleQuantityChange = (type) => {
+    let newQty = quantity;
+    if (type === "inc") newQty += 1;
+    else if (type === "dec" && quantity > 1) newQty -= 1;
+
+    setQuantity(newQty);
+    setTotalPrice(newQty * product.price);
   };
 
   const handlePlaceOrder = async () => {
@@ -399,7 +411,8 @@ const Checkout = () => {
         "https://tastytreatsmakhana.onrender.com/api/orders/create",
         {
           productId: product._id,
-          quantity: 1,
+          quantity,
+          totalAmount: totalPrice,
           name,
           email,
           phone,
@@ -432,7 +445,7 @@ const Checkout = () => {
       const orderResponse = await axios.post(
         "https://tastytreatsmakhana.onrender.com/api/payment/order",
         {
-          amount: product.price * 100, // amount in paise
+          amount: totalPrice * 100, // in paise
           currency: "INR",
           receipt: `receipt_order_${Math.random().toString(36).substring(7)}`,
         },
@@ -444,7 +457,6 @@ const Checkout = () => {
       const order = orderResponse.data;
 
       const options = {
-        // key: "rzp_test_ZvFAtBhVLTj8kz",
         key: process.env.REACT_APP_RAZORPAY_KEY || "rzp_live_KoIZrsBfMnwNHj",
         amount: order.amount,
         currency: order.currency,
@@ -457,14 +469,15 @@ const Checkout = () => {
               "https://tastytreatsmakhana.onrender.com/api/orders/create",
               {
                 productId: product._id,
-                quantity: 1,
+                quantity,
+                totalAmount: totalPrice,
                 name,
                 email,
                 phone,
                 address,
                 paymentMethod: "Online",
                 paymentInfo: {
-                  id:response.razorpay_payment_id,
+                  id: response.razorpay_payment_id,
                   order_id: response.razorpay_order_id,
                   signature: response.razorpay_signature,
                 },
@@ -499,8 +512,26 @@ const Checkout = () => {
         <strong>Product:</strong> {product.name}
       </p>
       <p className="mb-4">
-        <strong>Price:</strong> ₹{product.price}
+        <strong>Price (1x):</strong> ₹{product.price}
       </p>
+
+      <div className="flex items-center gap-4 mb-4">
+        <span className="font-medium">Quantity:</span>
+        <button
+          onClick={() => handleQuantityChange("dec")}
+          className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+        >
+          −
+        </button>
+        <span className="px-2">{quantity}</span>
+        <button
+          onClick={() => handleQuantityChange("inc")}
+          className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+        >
+          +
+        </button>
+        <span className="ml-4 text-sm text-gray-600">Total: ₹{totalPrice}</span>
+      </div>
 
       <input
         type="text"
@@ -536,8 +567,13 @@ const Checkout = () => {
 
       <div className="flex gap-4">
         <button
-          className="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600"
+          className={`px-6 py-2 rounded text-white ${
+            totalPrice >= 500
+              ? "bg-orange-500 hover:bg-orange-600"
+              : "bg-gray-400 cursor-not-allowed"
+          }`}
           onClick={handlePlaceOrder}
+          disabled={totalPrice < 500}
         >
           Cash on Delivery
         </button>
@@ -553,4 +589,3 @@ const Checkout = () => {
 };
 
 export default Checkout;
-
