@@ -23,7 +23,7 @@ const Products = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`https://tastytreatsmakhana.onrender.com/api/products/${id}`);
+        await axios.delete(`https://tastytreatsmakhana.onrender.com/api/products/delete/${id}`);
         setProducts((prev) => prev.filter((p) => p._id !== id));
       } catch (err) {
         console.error("Error deleting product", err);
