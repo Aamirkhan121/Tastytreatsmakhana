@@ -23,6 +23,7 @@
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.2",
     "nodemailer": "^6.10.1",
-    "razorpay": "^2.9.6"
+    "razorpay": "^2.9.6",
+    "twilio": "^5.7.1"
   }
 }

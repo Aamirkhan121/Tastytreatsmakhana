@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import logo from "../assets/tastycrunch-logo.jpg"; // ✅ Import the logo
@@ -54,8 +54,14 @@ const Navbar = () => {
             </div>
           ) : (
             <>
-              <Link to="/login" className="hover:text-blue-600">Login</Link>
-              <Link to="/register" className="hover:text-blue-600">Register</Link>
+
+            <div className="flex items-center space-x-2 text-gray-500 font-medium">
+  <User size={20} />
+  <span>Guest</span>
+</div>
+              {/* <Link to="/login" className="hover:text-blue-600">Login</Link>
+              <Link to="/register" className="hover:text-blue-600">Register</Link> */}
+             
             </>
           )}
         </div>

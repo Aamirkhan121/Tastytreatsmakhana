@@ -19,6 +19,9 @@ import TermsAndConditions from './pages/TermsAndConditions'
 import RefundPolicy from './pages/RefundPolicy'
 import CancellationPolicy from './pages/CancelationPolicy'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+// import VerifyMobile from './pages/VerifyMobile'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import CartPage from './pages/CartPage'
 // import { CartProvider } from '../context/CartContext'
 // import Checkout from './components/CheckOut'
@@ -44,17 +47,24 @@ const App = () => {
       {/* Example of a footer */}
      
       <Routes>
-        <Route path="/" element={<ProtectedRoute> <Home/> </ProtectedRoute> } />
-        <Route path="/about" element={<ProtectedRoute> <About/> </ProtectedRoute>} />
-        <Route path="/products" element={<ProtectedRoute> <Product/> </ProtectedRoute>} />
-        <Route path="/products/:productId" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} />
+        {/* <Route path="/" element={<ProtectedRoute> <Home/> </ProtectedRoute> } /> */}
+        {/* <Route path="/about" element={<ProtectedRoute> <About/> </ProtectedRoute>} /> */}
+        {/* <Route path="/products" element={<ProtectedRoute> <Product/> </ProtectedRoute>} /> */}
+        {/* <Route path="/products/:productId" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} /> */}
         {/* <Route path="/cart" element={<ProtectedRoute> <CartPage/> </ProtectedRoute>} /> */}
+           {/* <Route path="/my-orders" element={<ProtectedRoute> <MyOrder /> </ProtectedRoute>} />  */}
+           {/* <Route  path="/profile"  element={<ProtectedRoute> <ProfilePage /> </ProtectedRoute> }/> */}
+        <Route path="/" element={ <Home/>  } />
+        <Route path="/about" element={ <About/> } />
+        <Route path="/products" element={ <Product/> } />
+        {/* <Route path="/verifymobile" element={<VerifyMobile />} /> */}
+        <Route path="/products/:productId" element={<ProductDetails />} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
            {/* Protected Routes */}
-           <Route  path="/profile"  element={<ProtectedRoute> <ProfilePage /> </ProtectedRoute> }/>
-           <Route path="/my-orders" element={<ProtectedRoute> <MyOrder /> </ProtectedRoute>} /> 
+           <Route  path="/profile"  element={ <ProfilePage />  }/>
+           <Route path="/my-orders" element={ <MyOrder /> } /> 
            {/* <Route path='/admin' element={<AdminOrders/>}/> */}
             <Route path='/checkout' element={<Checkout/>}/> 
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
@@ -65,12 +75,8 @@ const App = () => {
            {/* <Route path="/checkout" element={<Checkout/>} />
            <Route path="/payment-success" element={<h2>Payment Success!</h2>} /> */}
       </Routes>
-      {/* <footer className="bg-gray-800 text-white py-4">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2023 Your Company Name. All rights reserved.</p>
-        </div>
-      </footer> */}
       <Footer/>
+       <ToastContainer position="top-center" autoClose={3000} />
       </BrowserRouter>
       {/* </CartProvider> */}
       </AuthProvider>
