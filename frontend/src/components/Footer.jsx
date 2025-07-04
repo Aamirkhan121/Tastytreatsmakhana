@@ -5,82 +5,99 @@ import {
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
-import logo from "../assets/tastycrunch-logo.jpg"; // Ensure the path is correct
+import logo from "../assets/tastycrunch-logo.jpg"; // ✅ Correct path
 
 const Footer = () => {
   return (
     <>
       {/* Main Footer */}
-      <footer className="bg-orange-50 text-gray-700 pt-10 pb-6 border-t border-orange-200">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <footer className="bg-gradient-to-br from-orange-50 via-yellow-50 to-orange-100 text-gray-800 pt-12 pb-8 border-t border-orange-200 shadow-inner">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
           {/* Brand Info */}
           <div>
-           <div className="flex items-center space-x-3 mb-3">
+            <div className="flex items-center space-x-3 mb-4">
               <img
                 src={logo}
                 alt="TastyCrunch Logo"
-                className="w-10 h-10 rounded-full object-cover"
+                className="w-10 h-10 rounded-full object-cover shadow-md"
               />
-              <h2 className="text-2xl font-extrabold text-orange-700 md:text-sm">
-                TastyCrunchMakhana
+              <h2 className="text-xl font-extrabold text-orange-700 tracking-wide">
+                TastyCrunch
               </h2>
             </div>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 leading-relaxed">
               Indulge in the healthiest, crunchiest, and most delicious makhanas,
-              packed with flavor and nutrition.
+              packed with flavor, purity, and love. #SnackSmart
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-semibold text-orange-600 mb-2">Quick Links</h3>
+            <h3 className="text-xl font-semibold text-orange-700 mb-3">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="/" className="hover:text-orange-700 transition">Home</a></li>
-              <li><a href="/products" className="hover:text-orange-700 transition">Products</a></li>
-              <li><a href="/about" className="hover:text-orange-700 transition">About Us</a></li>
-              <li><a href="/contact" className="hover:text-orange-700 transition">Contact</a></li>
-              <li><a href="/terms-and-conditions" className="hover:text-orange-700 transition">Terms & Conditions</a></li>
+              {["Home", "Products", "About Us", "Contact", "Terms & Conditions"].map((item, index) => (
+                <li key={index}>
+                  <a
+                    href={`/${item.toLowerCase().replace(/ /g, "-")}`}
+                    className="text-gray-700 hover:text-orange-600 transition duration-200"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-semibold text-orange-600 mb-2">Contact</h3>
+            <h3 className="text-xl font-semibold text-orange-700 mb-3">Contact Us</h3>
             <ul className="text-sm space-y-2">
-              <li>Email: <a href="mailto:wecaretastycrunch@gmail.com" className="text-orange-700">wecaretastycrunch@gmail.com</a></li>
-              <li>Phone: <a href="tel:+919833763739" className="text-orange-700">+91 9833763739</a></li>
-              <li>Address: Mumbai, Maharashtra, Andheri West, India</li>
+              <li>
+                📧 Email: <a href="mailto:wecaretastycrunch@gmail.com" className="text-blue-600 hover:underline">wecaretastycrunch@gmail.com</a>
+              </li>
+              <li>
+                📞 Phone: <a href="tel:+919833763739" className="text-blue-600 hover:underline">+91 9833763739</a>
+              </li>
+              <li>📍 Mumbai, Andheri West, Maharashtra</li>
             </ul>
           </div>
 
           {/* Social Media */}
           <div>
-            <h3 className="text-xl font-semibold text-orange-600 mb-2">Follow Us</h3>
-            <div className="flex space-x-4 mt-2">
-              <a href="#" className="text-orange-700 hover:text-orange-900"><FaFacebookF /></a>
-              <a href="https://www.instagram.com/tastytreatz9?igsh=MWd5azd5Y3RlbWRpbQ==" className="text-orange-700 hover:text-orange-900"><FaInstagram /></a>
-              <a href="#" className="text-orange-700 hover:text-orange-900"><FaTwitter /></a>
-              <a href="#" className="text-orange-700 hover:text-orange-900"><FaYoutube /></a>
+            <h3 className="text-xl font-semibold text-orange-700 mb-3">Follow Us</h3>
+            <div className="flex space-x-4 mt-3">
+              <a href="#" className="hover:scale-110 transition duration-300 text-blue-600">
+                <FaFacebookF size={20} />
+              </a>
+              <a href="https://www.instagram.com/tastytreatz9?igsh=MWd5azd5Y3RlbWRpbQ==" target="_blank" className="hover:scale-110 transition duration-300 text-pink-600">
+                <FaInstagram size={20} />
+              </a>
+              <a href="#" className="hover:scale-110 transition duration-300 text-blue-400">
+                <FaTwitter size={20} />
+              </a>
+              <a href="#" className="hover:scale-110 transition duration-300 text-red-600">
+                <FaYoutube size={20} />
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-10 text-center text-sm text-gray-500 border-t border-orange-100 pt-4">
-          &copy; {new Date().getFullYear()} TastyCrunchMakhana.com. All rights reserved. <br />
-          Developed by Md Aamir Khan.<br />
-          Contact: <a href="mailto:aamir73690@gmail.com" className="text-blue-500 hover:underline">aamir73690@gmail.com</a> | 
-          <a href="tel:+917369041570" className="text-blue-500 hover:underline"> +91 7369041570</a>
+        {/* Bottom Info */}
+        <div className="mt-12 text-center text-sm text-gray-500 border-t border-orange-100 pt-4">
+          © {new Date().getFullYear()} <span className="font-bold text-orange-700">TastyCrunchMakhana.com</span>. All rights reserved. <br />
+          Developed by <span className="text-blue-600 font-semibold">Md Aamir Khan</span> — 
+          <a href="mailto:aamir73690@gmail.com" className="ml-1 text-blue-500 hover:underline">aamir73690@gmail.com</a> | 
+          <a href="tel:+917369041570" className="ml-1 text-blue-500 hover:underline">+91 7369041570</a>
         </div>
       </footer>
 
-      {/* Legal Links Footer */}
-      <footer className="bg-gray-100 text-sm text-center p-4">
-        <div className="flex flex-wrap justify-center gap-4">
-          <a href="/terms-and-conditions" className="hover:underline">Terms & Conditions</a>
-          <a href="/refund-policy" className="hover:underline">Refund Policy</a>
-          <a href="/cancellation-policy" className="hover:underline">Cancellation Policy</a>
-          <a href="/privacy-policy" className="hover:underline">Privacy Policy</a>
+      {/* Legal Section */}
+      <footer className="bg-gray-100 text-sm text-center py-3">
+        <div className="flex flex-wrap justify-center gap-4 text-gray-600">
+          <a href="/terms-and-conditions" className="hover:text-orange-700 transition">Terms</a>
+          <a href="/refund-policy" className="hover:text-orange-700 transition">Refund</a>
+          <a href="/cancellation-policy" className="hover:text-orange-700 transition">Cancellation</a>
+          <a href="/privacy-policy" className="hover:text-orange-700 transition">Privacy</a>
         </div>
       </footer>
     </>
@@ -88,3 +105,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

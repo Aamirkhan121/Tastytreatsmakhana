@@ -39,7 +39,7 @@ const MyOrder = () => {
 
       await axios.patch(
         `https://tastytreatsmakhana.onrender.com/api/orders/cancel/${orderId}`,
-        { status: 'Cancelled', cancellationReason : reason },
+        { status: 'Cancelled', cancellationReason: reason },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,7 +48,7 @@ const MyOrder = () => {
       );
 
       alert('Order cancelled successfully.');
-      fetchOrders(); // refresh orders
+      fetchOrders();
     } catch (err) {
       console.error('Failed to cancel order:', err);
       alert('Failed to cancel the order. Please try again.');
@@ -59,50 +59,47 @@ const MyOrder = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <p className="text-lg font-semibold animate-pulse">Loading orders...</p>
+      <div className="flex justify-center items-center h-[60vh] bg-gradient-to-br from-yellow-50 to-orange-100">
+        <p className="text-lg font-semibold animate-pulse text-orange-700">Loading orders...</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">My Orders</h1>
+    <div className="max-w-7xl mx-auto px-4 py-10 bg-gradient-to-br from-yellow-100 to-orange-200 min-h-screen">
+      <h1 className="text-4xl font-extrabold text-center text-orange-700 mb-10 shadow-sm">
+        📦 My Order Summary
+      </h1>
 
       {orders.length === 0 ? (
         <div className="text-center mt-10">
           <p className="text-gray-600 text-lg">You have no orders yet.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {orders.map((order) => (
             <div
               key={order._id}
-              className="bg-white rounded-2xl shadow-md p-5 hover:shadow-lg transition-shadow duration-300 border border-gray-100"
+              className="bg-white rounded-3xl shadow-lg border border-orange-100 p-6 transition-transform hover:-translate-y-1 hover:shadow-xl relative overflow-hidden"
             >
-              {order.productId?.image && (
-                <img
-                  src={order.productId.image}
-                  alt={order.productId.name}
-                  className="w-full h-40 object-cover rounded-md mb-4"
-                />
-              )}
-
-              <h2 className="text-lg font-semibold text-indigo-600 mb-2">
-                {order.productId?.name || 'Unknown Product'}
-              </h2>
+              <div className="flex items-center space-x-4 mb-4">
+               
+                <div>
+                  <h2 className="text-xl font-semibold text-orange-600">
+                    {order.productId?.name || 'Unknown Product'}
+                  </h2>
+                  <p className="text-sm text-gray-500">Qty: {order.quantity}</p>
+                </div>
+              </div>
 
               <ul className="text-sm text-gray-700 space-y-1">
-                <li>
-                  <span className="font-medium">Quantity:</span> {order.quantity}
-                </li>
                 <li>
                   <span className="font-medium">Payment:</span> {order.paymentMethod}
                 </li>
                 <li>
                   <span className="font-medium">Status:</span>{' '}
                   <span
-                    className={`px-2 py-0.5 rounded text-white ${
+                    className={`px-2 py-0.5 rounded text-white text-xs font-semibold tracking-wide ml-1 ${
                       order.status === 'Delivered'
                         ? 'bg-green-500'
                         : order.status === 'Pending'
@@ -120,20 +117,18 @@ const MyOrder = () => {
                   {new Date(order.createdAt).toLocaleDateString()}
                 </li>
 
-                {/* Show cancel reason if order cancelled */}
-                {order.status === 'Cancelled' && order.cancellationReason  && (
+                {order.status === 'Cancelled' && order.cancellationReason && (
                   <li>
-                    <span className="font-medium">Cancel Reason:</span> {order.cancellationReason }
+                    <span className="font-medium">Cancel Reason:</span> {order.cancellationReason}
                   </li>
                 )}
               </ul>
 
-              {/* Cancel button - only if order not delivered or cancelled */}
               {order.status !== 'Delivered' && order.status !== 'Cancelled' && (
                 <button
                   onClick={() => handleCancel(order._id)}
                   disabled={cancellingId === order._id}
-                  className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-5 w-full bg-red-500 hover:bg-red-600 text-white text-sm font-medium py-2 px-4 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {cancellingId === order._id ? 'Cancelling...' : 'Cancel Order'}
                 </button>
@@ -147,3 +142,5 @@ const MyOrder = () => {
 };
 
 export default MyOrder;
+
+
