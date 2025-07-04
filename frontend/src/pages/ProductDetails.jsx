@@ -43,15 +43,16 @@ const ProductDetails = () => {
 
   const thumbnails = [products.image, ...(products.extraImages || [])];
 
-   const handleBuyNow = (product) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      toast.error("Please login to continue");
-      return navigate("/login");
-    }
-  
-    navigate("/checkout", { state: { product } });
-   }
+  const handleBuyNow = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    toast.error("Please login to continue");
+    return navigate("/login");
+  }
+
+  navigate("/checkout", { state: { product: products } });
+};
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">
@@ -104,11 +105,11 @@ const ProductDetails = () => {
           </div>
 
           <div className="space-x-4">
-            <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow-md transition duration-300">
+            {/* <button className="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow-md transition duration-300">
               Add to Cart
-            </button>
+            </button> */}
              <button
-                      onClick={() => handleBuyNow(product)}
+                       onClick={handleBuyNow}
                       className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm rounded-full transition duration-200"
                     >
                       Buy Now
