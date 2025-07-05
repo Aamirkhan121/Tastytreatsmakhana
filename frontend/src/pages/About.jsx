@@ -9,7 +9,8 @@ const About = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("https://tastytreatsmakhana.onrender.com/api/products")
+    axios
+      .get("https://tastytreatsmakhana.onrender.com/api/products")
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
@@ -21,8 +22,7 @@ const About = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 text-gray-900">
-      
+    <main className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 text-gray-900">
       {/* Hero Section */}
       <section className="py-20 text-center px-4 relative overflow-hidden">
         <motion.h1
@@ -31,7 +31,7 @@ const About = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          About Tasty Crunch Makhana
+          About Tasty Crunch
         </motion.h1>
         <motion.p
           className="text-xl text-gray-700 max-w-2xl mx-auto"
@@ -47,11 +47,11 @@ const About = () => {
       <section className="max-w-7xl mx-auto py-16 px-4 grid md:grid-cols-2 items-center gap-10">
         <motion.img
           src="/makhana_bowl.jpg"
-          alt="Makhana Bowl"
+          alt="Bowl of flavored makhana snacks"
           className="w-full rounded-3xl shadow-2xl object-cover h-[400px]"
           initial={{ scale: 0.9, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.6 }}
         />
         <motion.div
           initial={{ opacity: 0, x: 40 }}
@@ -60,9 +60,7 @@ const About = () => {
         >
           <h2 className="text-3xl font-semibold text-orange-600 mb-4">Our Story</h2>
           <p className="text-lg text-gray-700 leading-relaxed">
-            Tasty Crunch was born from a passion to redefine snacking. We started with a simple idea—
-            make makhanas fun, flavorful, and guilt-free. Sourced from the finest farms and roasted with care,
-            our makhanas are a crunch above the rest.
+            Tasty Crunch was born from a passion to redefine snacking. We started with a simple idea—make makhanas fun, flavorful, and guilt-free. Sourced from the finest farms and roasted with care, our makhanas are a crunch above the rest.
           </p>
         </motion.div>
       </section>
@@ -77,7 +75,7 @@ const About = () => {
         ) : (
           <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 gap-10">
             {products.map((item) => (
-              <motion.div
+              <motion.article
                 key={item._id}
                 className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 p-6 text-center"
                 whileInView={{ opacity: 1, y: 0 }}
@@ -86,14 +84,14 @@ const About = () => {
               >
                 <img
                   src={item.image}
-                  alt={item.name}
+                  alt={item.name + " flavored makhana"}
                   className="h-48 w-full object-cover rounded-xl mb-4 shadow-sm"
                 />
                 <h3 className="text-xl font-bold text-orange-700">{item.name}</h3>
                 <p className="text-gray-600 text-sm mt-1">{item.description}</p>
                 <p className="text-sm text-gray-500 mt-1">Flavor: {item.flavor}</p>
                 <p className="text-orange-800 font-semibold mt-2 text-lg">₹{item.price}</p>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         )}
@@ -137,7 +135,7 @@ const About = () => {
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
-          Join the Makhana Revolution with Tasty Treats today!
+          Join the Makhana Revolution with Tasty Crunch today!
         </motion.p>
         <motion.button
           onClick={() => navigate("/products")}
@@ -147,9 +145,10 @@ const About = () => {
           Explore Our Products
         </motion.button>
       </section>
-    </div>
+    </main>
   );
 };
 
 export default About;
+
 

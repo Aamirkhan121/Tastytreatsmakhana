@@ -4,23 +4,24 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Star, Minus, Plus } from 'lucide-react';
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [products, setProducts] = useState(null);
   const [mainImage, setMainImage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(`https://tastytreatsmakhana.onrender.com/api/products/${productId}`);
-        setProducts(response.data);
-        setMainImage(response.data.image);
-      } catch (error) {
-        console.error('Error fetching product details:', error);
+        const res = await axios.get(`https://tastytreatsmakhana.onrender.com/api/products/${productId}`);
+        setProducts(res.data);
+        setMainImage(res.data.image);
+      } catch (err) {
+        console.error('Error fetching product details:', err);
       } finally {
         setLoading(false);
       }
@@ -34,8 +35,20 @@ const ProductDetails = () => {
       toast.error("Please login to continue");
       return navigate("/login");
     }
-    navigate("/checkout", { state: { product: products } });
+
+    navigate("/checkout", {
+      state: {
+        product: products,
+        quantity: quantity,
+        totalPrice: products.price * quantity
+      }
+    });
   };
+
+  const increaseQuantity = () => setQuantity(q => q + 1);
+  const decreaseQuantity = () => setQuantity(q => (q > 1 ? q - 1 : 1));
+
+  const totalPrice = products ? products.price * quantity : 0;
 
   if (loading) {
     return (
@@ -76,8 +89,12 @@ const ProductDetails = () => {
       </motion.h2>
 
       <div className="backdrop-blur-xl bg-white/70 rounded-3xl shadow-2xl p-10 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        {/* 🔔 Offer Banner */}
+        <div className="mb-8 p-4 rounded-xl bg-gradient-to-r from-green-100 via-green-200 to-green-100 text-green-800 text-center font-semibold shadow-inner">
+          🎁 Get <span className="text-green-900 font-bold">FREE Delivery</span> on orders above ₹500! Delivered in <strong>4–7 days</strong>.
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
           {/* Product Image & Thumbnails */}
           <motion.div
             className="flex flex-col items-center gap-6"
@@ -113,14 +130,11 @@ const ProductDetails = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            <p className="text-3xl font-bold text-orange-600">
-              ₹{products.price}
-            </p>
+            <p className="text-3xl font-bold text-orange-600">₹{products.price}</p>
 
-            <p className="text-lg text-gray-700 font-medium">
-              {products.description}
-            </p>
+            <p className="text-lg text-gray-700 font-medium">{products.description}</p>
 
+            {/* Rating */}
             <div className="flex items-center space-x-2">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={18} className="text-yellow-400 fill-yellow-400" />
@@ -128,12 +142,40 @@ const ProductDetails = () => {
               <span className="text-sm text-gray-500 ml-2">(120 reviews)</span>
             </div>
 
-            <div className="text-base text-gray-600 space-y-1">
-              <p><strong>Sold By:</strong> <span className="text-blue-600">MyBrand</span></p>
-              <p><strong>Delivery:</strong> <span className="text-green-600 font-semibold">Free (2–3 days)</span></p>
-              <p><strong>COD:</strong> Available</p>
+            {/* Quantity & Price */}
+            <div className="flex items-center gap-4 mt-4">
+              <span className="text-md font-medium text-gray-600">Quantity:</span>
+              <div className="flex items-center border border-orange-300 rounded-full overflow-hidden">
+                <button
+                  onClick={decreaseQuantity}
+                  className="bg-orange-100 px-3 py-1 text-xl font-bold text-orange-600 hover:bg-orange-200 transition"
+                >
+                  <Minus size={18} />
+                </button>
+                <span className="px-4 text-lg">{quantity}</span>
+                <button
+                  onClick={increaseQuantity}
+                  className="bg-orange-100 px-3 py-1 text-xl font-bold text-orange-600 hover:bg-orange-200 transition"
+                >
+                  <Plus size={18} />
+                </button>
+              </div>
             </div>
 
+            {/* Total Price & Delivery Info */}
+            <p className="text-lg font-semibold text-green-600">
+              Total: ₹{totalPrice}
+            </p>
+            <p className="text-sm text-gray-700">
+              <strong>Delivery:</strong>{' '}
+              {totalPrice >= 500 ? (
+                <span className="text-green-600 font-semibold">Free (4–7 days)</span>
+              ) : (
+                <span className="text-red-500">₹80 Delivery Charge • 4–7 days</span>
+              )}
+            </p>
+
+            {/* Highlights */}
             <div>
               <h4 className="font-semibold text-gray-800 mt-4 mb-2">🔍 Highlights:</h4>
               <ul className="list-disc ml-6 text-sm text-gray-700 space-y-1">
@@ -143,6 +185,7 @@ const ProductDetails = () => {
               </ul>
             </div>
 
+            {/* Buy Now Button */}
             <button
               onClick={handleBuyNow}
               className="mt-6 px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-lg font-semibold rounded-full shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
@@ -157,4 +200,5 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
 

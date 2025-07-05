@@ -22,6 +22,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 // import VerifyMobile from './pages/VerifyMobile'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Subscribe from './pages/Subscribe'
 // import CartPage from './pages/CartPage'
 // import { CartProvider } from '../context/CartContext'
 // import Checkout from './components/CheckOut'
@@ -67,6 +68,7 @@ const App = () => {
            <Route path="/my-orders" element={ <MyOrder /> } /> 
            {/* <Route path='/admin' element={<AdminOrders/>}/> */}
             <Route path='/checkout' element={<Checkout/>}/> 
+            <Route path='/subscribe' element={<Subscribe/>}/> 
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/cancellation-policy" element={<CancellationPolicy />} />

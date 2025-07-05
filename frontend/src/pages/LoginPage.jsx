@@ -1,6 +1,9 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
+// import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+// import FacebookLogin from "react-facebook-login";
 
 const LoginPage = () => {
   const { login } = useContext(AuthContext);
@@ -8,71 +11,124 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       await login(email, password);
-      navigate("/");  // Redirect to profile page after login
+      navigate("/");
     } catch (err) {
-      setError(err.message);
+      setError("Invalid email or password");
     }
   };
 
+  // const handleGoogleSuccess = async (credentialResponse) => {
+  //   console.log("Google login success:", credentialResponse);
+  //   // Call backend or set token in localStorage
+  //   navigate("/");
+  // };
+
+  // const handleFacebookSuccess = async (response) => {
+  //   console.log("Facebook login success:", response);
+  //   // Call backend or set token in localStorage
+  //   navigate("/");
+  // };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Login</h2>
-        
-        {error && <div className="text-red-600 text-center mb-4">{error}</div>}
-        
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+    // <GoogleOAuthProvider clientId="335286647979-tg4dktn3bbjsnqsbo58oo9sgvh7tp36s.apps.googleusercontent.com">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+        <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl px-8 py-10">
+          <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">Welcome Back 👋</h2>
+
+          {error && (
+            <div className="text-red-500 text-sm text-center mb-4 font-medium">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <label className="text-gray-600 font-medium">Email Address</label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="text-gray-600 font-medium">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 pr-10"
+                  required
+                />
+                <div
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 text-white py-3 rounded-md font-semibold hover:bg-indigo-700 transition"
+            >
+              Login
+            </button>
+          </form>
+
+          {/* Social Login Divider */}
+          {/* <div className="my-6 flex items-center justify-center">
+            <div className="border-t border-gray-300 flex-grow mr-3"></div>
+            <span className="text-gray-500 text-sm">OR</span>
+            <div className="border-t border-gray-300 flex-grow ml-3"></div>
+          </div> */}
+
+          {/* Google Login */}
+          {/* <div className="flex justify-center mb-4">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => console.log("Google login error")}
             />
-          </div>
-          
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+          </div> */}
+
+          {/* Facebook Login */}
+          {/* <div className="flex justify-center">
+            <FacebookLogin
+              appId="YOUR_FACEBOOK_APP_ID"
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={handleFacebookSuccess}
+              icon="fa-facebook"
+              cssClass="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+              textButton=" Login with Facebook"
             />
-          </div>
-          
-          <div className="flex justify-between items-center">
-            <label className="text-sm">
-              <input type="checkbox" /> Remember me
-            </label>
-          </div>
-          
-          <button
-            type="submit"
-            className="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Login
-          </button>
-        </form>
-        
-        <div className="text-center mt-4">
-          <span className="text-sm text-gray-500">
+          </div> */}
+
+          <div className="text-center text-sm text-gray-600 mt-6">
             Don't have an account?{" "}
-            <a href="/register" className="text-blue-600 hover:text-blue-800">Sign up</a>
-          </span>
+            <Link to="/register" className="text-indigo-600 hover:underline font-medium">
+              Sign up
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    /* </GoogleOAuthProvider> */
   );
 };
 
 export default LoginPage;
+
+
