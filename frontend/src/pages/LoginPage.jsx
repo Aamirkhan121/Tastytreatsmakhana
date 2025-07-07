@@ -18,7 +18,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await login(email, password);
-      navigate("/");
+      navigate("/products");
     } catch (err) {
       setError("Invalid email or password");
     }
