@@ -81,7 +81,7 @@ const Products = () => {
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
-                    className="w-full h-64 object-center object-cover group-hover:scale-105 transition duration-300 rounded-t-2xl"
+                    className="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300 rounded-t-2xl"
                     style={{ imageRendering: 'auto' }}
                   />
                   <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs px-2 py-1 rounded-full shadow">

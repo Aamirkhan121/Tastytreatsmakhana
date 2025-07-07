@@ -3,6 +3,27 @@ import { Link } from 'react-router-dom';
 import HomeSlider from './HomeSlider';
 
 const Home = () => {
+  const bestsellers = [
+    {
+      id: "6803580c62e16f0e6bc2b658",
+      img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095327_kvwqat.png",
+      title: "Peri Peri Roasted Snack in Olive Oil (60g)",
+      desc: "A spicy and flavorful delight that packs a punch!"
+    },
+    {
+      id: "68031cfeeb5f443ef51cab12",
+      img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095211_jvwnuh.png",
+      title: "Roasted Cream & Onion Snack | Gluten Free | Zero Trans Fat",
+      desc: "Smooth, tangy & crunchy combo. Perfect for anytime snacking."
+    },
+    {
+      id: "68031d81eb5f443ef51cab14",
+      img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095359_uhapen.png",
+      title: "Himalayan Salted | 60g",
+      desc: "Simple, crunchy & preservative-free. Lightly seasoned with Himalayan Salt."
+    },
+  ];
+
   return (
     <main className="bg-gradient-to-tr from-yellow-100 via-white to-amber-200 text-gray-800">
 
@@ -50,25 +71,16 @@ const Home = () => {
           Our Bestsellers
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-7xl mx-auto">
-          {[
-            {
-              img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095327_kvwqat.png",
-              title: "Peri Peri Roasted Snack in Olive Oil (60g)",
-              desc: "A spicy and flavorful delight that packs a punch!"
-            },
-            {
-              img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095211_jvwnuh.png",
-              title: "Roasted Cream & Onion Snack | Gluten Free | Zero Trans Fat",
-              desc: "Smooth, tangy & crunchy combo. Perfect for anytime snacking."
-            },
-            {
-              img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095359_uhapen.png",
-              title: "Himalayan Salted | 60g",
-              desc: "Simple, crunchy & preservative-free. Lightly seasoned with Himalayan Salt."
-            },
-          ].map((item, i) => (
+          {bestsellers.map((item, i) => (
             <article key={i} className="bg-white border border-yellow-200 rounded-3xl shadow-xl hover:shadow-2xl p-6 transition duration-300 transform hover:-translate-y-1 animate-fade-in-up delay-100">
-              <img src={item.img} alt={item.title} className="w-full h-56 object-cover rounded-2xl shadow-md" loading="lazy" />
+              <Link to={`/products/${item.id}`}>
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-56 object-cover rounded-2xl shadow-md hover:scale-105 transition duration-300"
+                  loading="lazy"
+                />
+              </Link>
               <h3 className="text-xl font-bold mt-5 text-yellow-800">{item.title}</h3>
               <p className="text-gray-600 mt-2">{item.desc}</p>
             </article>
