@@ -91,8 +91,10 @@ const Navbar = () => {
             </div>
           ) : (
             <>
-              <Link to="/login" onClick={closeMenu} className="block text-gray-700 font-medium hover:text-orange-600">Login</Link>
-              <Link to="/register" onClick={closeMenu} className="block text-gray-700 font-medium hover:text-orange-600">Register</Link>
+              <div className="flex items-center space-x-2 text-gray-600 font-medium">
+              <User size={20} />
+              <span>Guest</span>
+            </div>
             </>
           )}
         </div>
