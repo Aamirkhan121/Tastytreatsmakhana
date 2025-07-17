@@ -28,18 +28,28 @@ const slides = [
 const HomeSlider = () => {
   return (
     <div className="w-full">
-      {/* 🔁 Scrolling Banner Reel */}
-      <div className="bg-orange-500 text-white py-2 overflow-hidden relative z-20">
-        <div className="whitespace-nowrap animate-marquee font-semibold text-lg flex gap-8">
-          {Array(10)
-            .fill("🎉 Free Delivery on Orders Above ₹500! 🚚")
-            .map((text, i) => (
-              <span key={i}>{text}</span>
-            ))}
+      {/* 🔁 Seamless Marquee */}
+      <div className="overflow-hidden bg-orange-500 text-white py-2 relative z-20">
+        <div className="flex w-max animate-marquee gap-16">
+          {Array(2).fill( 
+            <span className="whitespace-nowrap text-lg font-semibold">
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
+              🎉 Free Delivery on Orders Above ₹500! 🚚   
+            </span>
+          )}
         </div>
       </div>
 
-      {/* 🖼️ Gradient Slider with Text Only */}
+      {/* 🖼️ Gradient Swiper Slider */}
       <Swiper
         modules={[Autoplay, Pagination]}
         autoplay={{ delay: 4000, disableOnInteraction: false }}
@@ -69,6 +79,7 @@ const HomeSlider = () => {
 };
 
 export default HomeSlider;
+
 
 
 
