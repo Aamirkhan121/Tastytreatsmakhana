@@ -69,7 +69,7 @@ const Footer = () => {
               <a href="#" className="hover:scale-110 transition duration-300 text-blue-600">
                 <FaFacebookF size={20} />
               </a>
-              <a href="https://www.instagram.com/tastytreatz9?igsh=MWd5azd5Y3RlbWRpbQ==" target="_blank" className="hover:scale-110 transition duration-300 text-pink-600">
+              <a href="https://www.instagram.com/tastycrunch_official?igsh=NGdvYW5idnlzYTY%3D&utm_source=qr" target="_blank" className="hover:scale-110 transition duration-300 text-pink-600">
                 <FaInstagram size={20} />
               </a>
               <a href="#" className="hover:scale-110 transition duration-300 text-blue-400">
