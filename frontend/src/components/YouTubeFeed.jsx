@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_KEY = "AIzaSyBZjSelK8poApWILpT9Fw5i6d9L89IwBQA";
-const CHANNEL_ID = "UC7qSSmLWayxOJaTL6OmzA8A"; // Replace with your actual Channel ID
+const API_KEY = import.meta.env.VITE_API_YOUTUBE_KEY; // Use VITE prefix for environment variables  
+const CHANNEL_ID = import.meta.env.CHANNEL_ID; // Replace with your actual Channel ID
 const MAX_RESULTS = 6;
 
 const YouTubeFeed = () => {
