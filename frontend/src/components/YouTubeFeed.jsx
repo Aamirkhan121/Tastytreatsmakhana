@@ -6,7 +6,7 @@ const API_KEY = import.meta.env.VITE_API_YOUTUBE_KEY; // Use VITE prefix for env
 const CHANNEL_ID = import.meta.env.VITE_YOUTUBE_CHANNEL_ID;; // Replace with your actual Channel ID
 const MAX_RESULTS = 6;
 
-const YouTubeFeed = () => {
+const YoutubeFeed = () => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
@@ -52,4 +52,4 @@ const YouTubeFeed = () => {
   );
 };
 
-export default YouTubeFeed;
+export default YoutubeFeed;
