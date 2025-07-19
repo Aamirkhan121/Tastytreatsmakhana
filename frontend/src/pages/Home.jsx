@@ -1,7 +1,7 @@
   import React from 'react';
   import { Link } from 'react-router-dom';
   import HomeSlider from './HomeSlider';
- import YouTubeFeed from '../components/YouTubeFeed.jsx';
+ import YouTubeFeed from '../components/YoutubeFeed.jsx';
 
   const Home = () => {
     const bestsellers = [

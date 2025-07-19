@@ -75,7 +75,7 @@ const Footer = () => {
               <a href="#" className="hover:scale-110 transition duration-300 text-blue-400">
                 <FaTwitter size={20} />
               </a>
-              <a href="#" className="hover:scale-110 transition duration-300 text-red-600">
+              <a href="https://www.youtube.com/@TASTY_CRUNCH" className="hover:scale-110 transition duration-300 text-red-600">
                 <FaYoutube size={20} />
               </a>
             </div>
