@@ -1,7 +1,7 @@
   import React from 'react';
   import { Link } from 'react-router-dom';
   import HomeSlider from './HomeSlider';
-import YoutubeFeed from '../components/YoutubeFeed.jsx';
+ import YouTubeFeed from '../components/YouTubeFeed.jsx';
 
   const Home = () => {
     const bestsellers = [
@@ -99,7 +99,7 @@ import YoutubeFeed from '../components/YoutubeFeed.jsx';
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
-          <YoutubeFeed />
+          <YouTubeFeed />
             </div>
       </section>
 
