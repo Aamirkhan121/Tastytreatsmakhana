@@ -23,4 +23,39 @@
     <lastmod>2025-07-19</lastmod>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://tastycrunchmakhana.com/login</loc>
+    <lastmod>2025-07-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tastycrunchmakhana.com/register</loc>
+    <lastmod>2025-07-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tastycrunchmakhana.com/checkout</loc>
+    <lastmod>2025-07-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tastycrunchmakhana.com/products/:productId</loc>
+    <lastmod>2025-07-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tastycrunchmakhana.com/profile</loc>
+    <lastmod>2025-07-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tastycrunchmakhana.com/my-orders</loc>
+    <lastmod>2025-07-19</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tastycrunchmakhana.com/terms-and-conditions</loc>
+    <lastmod>2025-07-19</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>
