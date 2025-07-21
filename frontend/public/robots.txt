@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /about-us 
+Allow: /
+
+Sitemap: https://tastycrunchmakhana.com/sitemap.xml
