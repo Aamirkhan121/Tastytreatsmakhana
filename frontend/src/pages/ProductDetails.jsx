@@ -84,47 +84,26 @@ const ProductDetails = () => {
 
   return (
     <>
-     <Helmet>
-  <title>{products.name} – TastyCrunch Makhana</title>
-  <meta name="description" content={products.description} />
-  <script type="application/ld+json">
-    {JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: products.name,
-      image: [products.image, ...(products.extraImages || [])],
-      description: products.description,
-      sku: productId,
-      offers: {
-        "@type": "Offer",
-        priceCurrency: "INR",
-        price: products.price.toString(),
-        availability: "https://schema.org/InStock",
-        url: window.location.href,
-        shippingDetails: {
-          "@type": "OfferShippingDetails",
-          shippingRate: {
-            "@type": "MonetaryAmount",
-            value: totalPrice >= 500 ? 0 : 80,
-            currency: "INR"
-          },
-          shippingDestination: {
-            "@type": "DefinedRegion",
-            addressCountry: "IN"
-          }
-        },
-        hasMerchantReturnPolicy: {
-          "@type": "MerchantReturnPolicy",
-          returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
-          merchantReturnDays: 7,
-          returnMethod: "https://schema.org/ReturnByMail",
-          returnFees: "https://schema.org/FreeReturn"
-        }
-      }
-    })}
-  </script>
-</Helmet>
-
+      <Helmet>
+        <title>{products.name} – TastyCrunch Makhana</title>
+        <meta name="description" content={products.description} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: products.name,
+            image: [products.image, ...(products.extraImages || [])],
+            description: products.description,
+            sku: productId,
+            offers: {
+              "@type": "Offer",
+              priceCurrency: "INR",
+              price: products.price,
+              availability: "https://schema.org/InStock"
+            }
+          })}
+        </script>
+      </Helmet>
 
       <motion.div
         className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-yellow-50 via-orange-50 to-white font-[Poppins]"
