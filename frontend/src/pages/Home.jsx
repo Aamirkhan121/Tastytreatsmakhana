@@ -2,6 +2,7 @@
   import { Link } from 'react-router-dom';
   import HomeSlider from './HomeSlider';
  import YouTubeFeed from '../components/YouTubeFeed.jsx';
+ import InstagramEmbed  from '../components/InstagramEmbed.jsx';
 
   const Home = () => {
     const bestsellers = [
@@ -100,6 +101,22 @@
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
           <YouTubeFeed />
+            </div>
+      </section>
+
+       {/* 📺 Instagram Section */}
+        <section className="py-24 px-6 text-center bg-orange-50">
+        <h2 className="text-4xl font-extrabold text-orange-700 mb-4 drop-shadow-md animate-fade-in-up">
+         Follow Us on Instagram
+        </h2>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12 animate-fade-in-up delay-100">
+          Check out our latest reels and behind-the-scenes snack fun!
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+          <InstagramEmbed url="https://www.instagram.com/p/DMSdsFVOT19/?utm_source=ig_web_copy_link&igsh=eWs1dWRoNmxjMjN6" />
+          <InstagramEmbed url="https://www.instagram.com/reel/DMKv_xiJZ2Y/?utm_source=ig_web_copy_link&igsh=Y29uOTljc2I2cWdj" />
+          <InstagramEmbed url="https://www.instagram.com/reel/DMDA43Nptpz/?utm_source=ig_web_copy_link&igsh=djA3OHoyNWRqbzQ5" />
             </div>
       </section>
 
