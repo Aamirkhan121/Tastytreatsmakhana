@@ -2,7 +2,7 @@
   import { Link } from 'react-router-dom';
   import HomeSlider from './HomeSlider';
  import YouTubeFeed from '../components/YouTubeFeed.jsx';
- import InstagramEmbed  from '../components/InstagramEmbed.jsx';
+import Instagram from '../components/Instagram.jsx';
 
   const Home = () => {
     const bestsellers = [
@@ -113,11 +113,9 @@
           Check out our latest reels and behind-the-scenes snack fun!
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
-          <InstagramEmbed url="https://www.instagram.com/p/DMSdsFVOT19/?utm_source=ig_web_copy_link&igsh=eWs1dWRoNmxjMjN6" />
-          <InstagramEmbed url="https://www.instagram.com/reel/DMKv_xiJZ2Y/?utm_source=ig_web_copy_link&igsh=Y29uOTljc2I2cWdj" />
-          <InstagramEmbed url="https://www.instagram.com/reel/DMDA43Nptpz/?utm_source=ig_web_copy_link&igsh=djA3OHoyNWRqbzQ5" />
-            </div>
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto"> */}
+  <Instagram />
+  {/* </div> */}
       </section>
 
 
