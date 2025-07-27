@@ -388,9 +388,18 @@ const Checkout = () => {
   const [quantity, setQuantity] = useState(passedQuantity);
   const [totalPrice, setTotalPrice] = useState(passedTotalPrice);
 
-  if (!product) {
-    return <p className="text-center text-red-600 mt-10">No product found.</p>;
-  }
+ if (!product) {
+  return (
+    <div className="text-center mt-10">
+      <p className="text-red-600 mb-4">No product selected. Please go to Product Page.</p>
+      <Link
+        to="/products"
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 inline-block"
+      >
+        Go to Products
+      </Link>
+    </div>
+  )};
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -501,18 +510,7 @@ const Checkout = () => {
     }
   };
 
- if (!product)
-  return (
-    <div className="text-center mt-10">
-      <p className="text-red-600 mb-4">No product selected. Please go to Product Page.</p>
-      <Link
-        to="/products"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 inline-block"
-      >
-        Go to Products
-      </Link>
-    </div>
-  );
+  if (!product) return <p className="text-center text-red-600 mt-10">No product found.</p>;
 
 
   return (
