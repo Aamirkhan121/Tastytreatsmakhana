@@ -353,7 +353,7 @@
 // export default Checkout;
 
  // src/components/Checkout.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -371,11 +371,16 @@ const loadRazorpayScript = () => {
 const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const product = location.state?.product;
-  const passedQuantity = location.state?.quantity || 1;
-  const passedTotalPrice = location.state?.totalPrice || product?.price || 0;
-
   const token = localStorage.getItem("token");
+
+  // Try getting product from state or localStorage
+  const productFromState = location.state?.product;
+  const quantityFromState = location.state?.quantity || 1;
+  const totalPriceFromState = location.state?.totalPrice || 0;
+
+  const [product, setProduct] = useState(null);
+  const [quantity, setQuantity] = useState(quantityFromState);
+  const [totalPrice, setTotalPrice] = useState(totalPriceFromState);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -384,12 +389,26 @@ const Checkout = () => {
     address: "",
   });
 
-  const [quantity, setQuantity] = useState(passedQuantity);
-  const [totalPrice, setTotalPrice] = useState(passedTotalPrice);
+  // Get product from localStorage or location.state
+  useEffect(() => {
+    if (productFromState) {
+      setProduct(productFromState);
+      localStorage.setItem("checkoutProduct", JSON.stringify(productFromState));
+      localStorage.setItem("checkoutQuantity", quantityFromState);
+      localStorage.setItem("checkoutTotalPrice", totalPriceFromState);
+    } else {
+      const storedProduct = localStorage.getItem("checkoutProduct");
+      const storedQty = localStorage.getItem("checkoutQuantity");
+      const storedTotal = localStorage.getItem("checkoutTotalPrice");
 
-  if (!product) {
-    return <p className="text-center text-red-600 mt-10">No product found.</p>;
-  }
+      if (storedProduct) {
+        setProduct(JSON.parse(storedProduct));
+        setQuantity(parseInt(storedQty) || 1);
+        setTotalPrice(parseInt(storedTotal) || 0);
+      }
+    }
+  }, [productFromState, quantityFromState, totalPriceFromState]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -400,15 +419,14 @@ const Checkout = () => {
     else if (type === "dec" && quantity > 1) newQty -= 1;
 
     setQuantity(newQty);
-    setTotalPrice(newQty * product.price);
+    setTotalPrice(newQty * (product?.price || 0));
   };
 
   const handlePlaceOrder = async () => {
     const { name, email, phone, address } = formData;
     if (!token) return toast.error("Please log in first");
-    if (!name || !email || !phone || !address) {
+    if (!name || !email || !phone || !address)
       return toast.error("Please fill all fields");
-    }
 
     try {
       await axios.post(
@@ -426,6 +444,9 @@ const Checkout = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success("Order placed with Cash on Delivery!");
+      localStorage.removeItem("checkoutProduct");
+      localStorage.removeItem("checkoutQuantity");
+      localStorage.removeItem("checkoutTotalPrice");
       navigate("/products");
     } catch (err) {
       toast.error("Failed to place order");
@@ -435,9 +456,8 @@ const Checkout = () => {
   const handleOnlinePayment = async () => {
     const { name, email, phone, address } = formData;
     if (!token) return toast.error("Please log in first");
-    if (!name || !email || !phone || !address) {
+    if (!name || !email || !phone || !address)
       return toast.error("Please fill all fields");
-    }
 
     const res = await loadRazorpayScript();
     if (!res) return toast.error("Razorpay SDK failed to load");
@@ -448,7 +468,7 @@ const Checkout = () => {
         {
           amount: totalPrice * 100,
           currency: "INR",
-          receipt: `receipt_order_${Math.random().toString(36).substring(7)}`,
+          receipt: `receipt_${Date.now()}`,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -484,6 +504,7 @@ const Checkout = () => {
               { headers: { Authorization: `Bearer ${token}` } }
             );
             toast.success("Payment successful and order placed!");
+            localStorage.clear();
             navigate("/products");
           } catch (error) {
             toast.error("Order placement failed after payment");
@@ -500,51 +521,43 @@ const Checkout = () => {
     }
   };
 
-  if (!product) return <p className="text-center text-red-600 mt-10">No product found.</p>;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-yellow-100 py-12 px-4">
-
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-8 md:p-10">
         <h1 className="text-3xl font-bold text-orange-600 mb-6 text-center">🛒 Checkout</h1>
 
-      {product ? (
-  <div className="flex flex-col md:flex-row items-center gap-6 mb-6">
-    <img
-      src={product.image}
-      alt={product.name}
-      className="w-32 h-32 rounded-xl object-cover shadow-md"
-    />
-    <div>
-      <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
-      <p className="text-sm text-gray-600 mt-1">₹{product.price} / item</p>
-      <div className="flex items-center mt-3">
-        <button
-          onClick={() => handleQuantityChange("dec")}
-          className="bg-gray-200 px-3 py-1 rounded-l text-lg"
-        >
-          −
-        </button>
-        <span className="px-4 text-lg">{quantity}</span>
-        <button
-          onClick={() => handleQuantityChange("inc")}
-          className="bg-gray-200 px-3 py-1 rounded-r text-lg"
-        >
-          +
-        </button>
-      </div>
-      <p className="mt-2 text-green-700 font-medium">Total: ₹{totalPrice}</p>
-      {totalPrice >= 500 && (
-        <p className="text-sm text-blue-500 mt-1">🎉 Free Delivery applied!</p>
-      )}
-    </div>
-  </div>
-) : (
-  <p className="text-center text-gray-600 mb-6">
-    No product selected. Please return to <span className="text-orange-600 font-semibold">Products</span> page.
-  </p>
-)}
-
+        {product && (
+          <div className="flex flex-col md:flex-row items-center gap-6 mb-6">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-32 h-32 rounded-xl object-cover shadow-md"
+            />
+            <div>
+              <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
+              <p className="text-sm text-gray-600 mt-1">₹{product.price} / item</p>
+              <div className="flex items-center mt-3">
+                <button
+                  onClick={() => handleQuantityChange("dec")}
+                  className="bg-gray-200 px-3 py-1 rounded-l text-lg"
+                >
+                  −
+                </button>
+                <span className="px-4 text-lg">{quantity}</span>
+                <button
+                  onClick={() => handleQuantityChange("inc")}
+                  className="bg-gray-200 px-3 py-1 rounded-r text-lg"
+                >
+                  +
+                </button>
+              </div>
+              <p className="mt-2 text-green-700 font-medium">Total: ₹{totalPrice}</p>
+              {totalPrice >= 500 && (
+                <p className="text-sm text-blue-500 mt-1">🎉 Free Delivery applied!</p>
+              )}
+            </div>
+          </div>
+        )}
 
         <div className="space-y-4">
           <input
@@ -581,31 +594,31 @@ const Checkout = () => {
           />
         </div>
 
-      {product && (
-  <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
-    <button
-      className={`w-full md:w-auto px-6 py-3 rounded-full text-white font-semibold transition ${
-        totalPrice >= 500
-          ? "bg-orange-500 hover:bg-orange-600"
-          : "bg-gray-400 cursor-not-allowed"
-      }`}
-      onClick={handlePlaceOrder}
-      disabled={totalPrice < 500}
-    >
-      🚚 Cash on Delivery
-    </button>
-    <button
-      className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition"
-      onClick={handleOnlinePayment}
-    >
-      💳 Pay Online
-    </button>
-  </div>
-)}
-
+        {product && (
+          <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
+            <button
+              className={`w-full md:w-auto px-6 py-3 rounded-full text-white font-semibold transition ${
+                totalPrice >= 500
+                  ? "bg-orange-500 hover:bg-orange-600"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
+              onClick={handlePlaceOrder}
+              disabled={totalPrice < 500}
+            >
+              🚚 Cash on Delivery
+            </button>
+            <button
+              className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition"
+              onClick={handleOnlinePayment}
+            >
+              💳 Pay Online
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default Checkout;
+
