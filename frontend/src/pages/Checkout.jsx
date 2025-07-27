@@ -508,36 +508,43 @@ const Checkout = () => {
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-8 md:p-10">
         <h1 className="text-3xl font-bold text-orange-600 mb-6 text-center">🛒 Checkout</h1>
 
-        <div className="flex flex-col md:flex-row items-center gap-6 mb-6">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-32 h-32 rounded-xl object-cover shadow-md"
-          />
-          <div>
-            <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
-            <p className="text-sm text-gray-600 mt-1">₹{product.price} / item</p>
-            <div className="flex items-center mt-3">
-              <button
-                onClick={() => handleQuantityChange("dec")}
-                className="bg-gray-200 px-3 py-1 rounded-l text-lg"
-              >
-                −
-              </button>
-              <span className="px-4 text-lg">{quantity}</span>
-              <button
-                onClick={() => handleQuantityChange("inc")}
-                className="bg-gray-200 px-3 py-1 rounded-r text-lg"
-              >
-                +
-              </button>
-            </div>
-            <p className="mt-2 text-green-700 font-medium">Total: ₹{totalPrice}</p>
-            {totalPrice >= 500 && (
-              <p className="text-sm text-blue-500 mt-1">🎉 Free Delivery applied!</p>
-            )}
-          </div>
-        </div>
+      {product ? (
+  <div className="flex flex-col md:flex-row items-center gap-6 mb-6">
+    <img
+      src={product.image}
+      alt={product.name}
+      className="w-32 h-32 rounded-xl object-cover shadow-md"
+    />
+    <div>
+      <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
+      <p className="text-sm text-gray-600 mt-1">₹{product.price} / item</p>
+      <div className="flex items-center mt-3">
+        <button
+          onClick={() => handleQuantityChange("dec")}
+          className="bg-gray-200 px-3 py-1 rounded-l text-lg"
+        >
+          −
+        </button>
+        <span className="px-4 text-lg">{quantity}</span>
+        <button
+          onClick={() => handleQuantityChange("inc")}
+          className="bg-gray-200 px-3 py-1 rounded-r text-lg"
+        >
+          +
+        </button>
+      </div>
+      <p className="mt-2 text-green-700 font-medium">Total: ₹{totalPrice}</p>
+      {totalPrice >= 500 && (
+        <p className="text-sm text-blue-500 mt-1">🎉 Free Delivery applied!</p>
+      )}
+    </div>
+  </div>
+) : (
+  <p className="text-center text-gray-600 mb-6">
+    No product selected. Please return to <span className="text-orange-600 font-semibold">Products</span> page.
+  </p>
+)}
+
 
         <div className="space-y-4">
           <input
@@ -574,25 +581,28 @@ const Checkout = () => {
           />
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
-          <button
-            className={`w-full md:w-auto px-6 py-3 rounded-full text-white font-semibold transition ${
-              totalPrice >= 500
-                ? "bg-orange-500 hover:bg-orange-600"
-                : "bg-gray-400 cursor-not-allowed"
-            }`}
-            onClick={handlePlaceOrder}
-            disabled={totalPrice < 500}
-          >
-            🚚 Cash on Delivery
-          </button>
-          <button
-            className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition"
-            onClick={handleOnlinePayment}
-          >
-            💳 Pay Online
-          </button>
-        </div>
+      {product && (
+  <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
+    <button
+      className={`w-full md:w-auto px-6 py-3 rounded-full text-white font-semibold transition ${
+        totalPrice >= 500
+          ? "bg-orange-500 hover:bg-orange-600"
+          : "bg-gray-400 cursor-not-allowed"
+      }`}
+      onClick={handlePlaceOrder}
+      disabled={totalPrice < 500}
+    >
+      🚚 Cash on Delivery
+    </button>
+    <button
+      className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition"
+      onClick={handleOnlinePayment}
+    >
+      💳 Pay Online
+    </button>
+  </div>
+)}
+
       </div>
     </div>
   );
