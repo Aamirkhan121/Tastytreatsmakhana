@@ -387,7 +387,7 @@ const Checkout = () => {
   const [quantity, setQuantity] = useState(passedQuantity);
 
   // Delivery charge logic
-  const deliveryCharge = quantity >= 4 ? 0 : 50;
+  const deliveryCharge = quantity >= 4 ? 0 : 40;
   const totalPrice = (product?.price || 0) * quantity + deliveryCharge;
 
   if (!product) {

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Star, Minus, Plus } from 'lucide-react';
-import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -31,12 +29,6 @@ const ProductDetails = () => {
   }, [productId]);
 
   const handleBuyNow = () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      toast.error("Please login to continue");
-      return navigate("/login");
-    }
-
     navigate("/checkout", {
       state: {
         product: products,
@@ -48,10 +40,13 @@ const ProductDetails = () => {
 
   const increaseQuantity = () => setQuantity(q => q + 1);
   const decreaseQuantity = () => setQuantity(q => (q > 1 ? q - 1 : 1));
-  const totalPrice = products ? products.price * quantity : 0;
+
+  const productPrice = products ? products.price * quantity : 0;
+  const deliveryCharge = productPrice >= 500 ? 0 : 40;
+  const totalPrice = productPrice + deliveryCharge;
+
   const thumbnails = products ? [products.image, ...(products.extraImages || [])] : [];
 
-  // 🔰 SEO Fallback content for Google during loading
   if (loading) {
     return (
       <>
@@ -67,7 +62,6 @@ const ProductDetails = () => {
     );
   }
 
-  // 🔴 If product not found
   if (!products) {
     return (
       <>
@@ -111,7 +105,7 @@ const ProductDetails = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {/* 🎨 Background Effects */}
+        {/* Background Effects */}
         <div className="absolute top-0 left-0 w-48 h-48 sm:w-72 sm:h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse -z-10"></div>
         <div className="absolute bottom-0 right-0 w-56 h-56 sm:w-80 sm:h-80 bg-orange-400 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-pulse -z-10"></div>
 
@@ -126,13 +120,13 @@ const ProductDetails = () => {
           </motion.h2>
 
           <div className="backdrop-blur-xl bg-white/70 rounded-3xl shadow-2xl p-6 sm:p-10 max-w-7xl mx-auto">
-            {/* 🎁 Offer */}
+            {/* Offer */}
             <div className="mb-8 p-4 rounded-xl bg-gradient-to-r from-green-100 via-green-200 to-green-100 text-green-800 text-center font-semibold shadow-inner">
               🎁 Get <span className="text-green-900 font-bold">FREE Delivery</span> on orders above ₹500!
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-              {/* 📸 Image Gallery */}
+              {/* Image Gallery */}
               <motion.div
                 className="flex flex-col items-center gap-6"
                 initial={{ x: -40, opacity: 0 }}
@@ -160,7 +154,7 @@ const ProductDetails = () => {
                 </div>
               </motion.div>
 
-              {/* 🧾 Product Info */}
+              {/* Product Info */}
               <motion.div
                 className="space-y-6"
                 initial={{ x: 40, opacity: 0 }}
@@ -170,7 +164,7 @@ const ProductDetails = () => {
                 <p className="text-3xl font-bold text-orange-600">₹{products.price}</p>
                 <p className="text-lg text-gray-700 font-medium">{products.description}</p>
 
-                {/* ⭐ Rating */}
+                {/* Rating */}
                 <div className="flex items-center space-x-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={18} className="text-yellow-400 fill-yellow-400" />
@@ -178,7 +172,7 @@ const ProductDetails = () => {
                   <span className="text-sm text-gray-500 ml-2">(120 reviews)</span>
                 </div>
 
-                {/* 🔢 Quantity */}
+                {/* Quantity */}
                 <div className="flex items-center gap-4 mt-4">
                   <span className="text-md font-medium text-gray-600">Quantity:</span>
                   <div className="flex items-center border border-orange-300 rounded-full overflow-hidden">
@@ -198,18 +192,18 @@ const ProductDetails = () => {
                   </div>
                 </div>
 
-                {/* 💰 Total & Delivery */}
+                {/* Total & Delivery */}
                 <p className="text-lg font-semibold text-green-600">Total: ₹{totalPrice}</p>
                 <p className="text-sm text-gray-700">
                   <strong>Delivery:</strong>{' '}
-                  {totalPrice >= 500 ? (
-                    <span className="text-green-600 font-semibold">Free (4–7 days)</span>
+                  {deliveryCharge === 0 ? (
+                    <span className="text-green-600 font-semibold">Free Delivery</span>
                   ) : (
-                    <span className="text-red-500">₹80 Delivery Charge • 4–7 days</span>
+                    <span className="text-red-500">₹40 Delivery Charge</span>
                   )}
                 </p>
 
-                {/* 📝 Highlights */}
+                {/* Highlights */}
                 <div>
                   <h4 className="font-semibold text-gray-800 mt-4 mb-2">🔍 Highlights:</h4>
                   <ul className="list-disc ml-6 text-sm text-gray-700 space-y-1">
@@ -219,7 +213,7 @@ const ProductDetails = () => {
                   </ul>
                 </div>
 
-                {/* 🛒 Buy Now */}
+                {/* Buy Now */}
                 <button
                   onClick={handleBuyNow}
                   className="mt-6 px-6 py-3 bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white text-lg font-semibold rounded-full shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
