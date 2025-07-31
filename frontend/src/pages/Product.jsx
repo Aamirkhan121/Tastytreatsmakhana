@@ -93,12 +93,12 @@ const Products = () => {
                   onClick={() => navigate(`/products/${product._id}`)}
                 >
                   {/* Static image use ho rahi hai */}
-                  <img
-                    src={staticImages[index % staticImages.length]}
-                    alt={product.name}
-                    loading="lazy"
-                    className="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300 rounded-t-2xl"
-                  />
+                 <img
+  src={product.image}
+  alt={product.name}
+  loading="lazy"
+  className="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300 rounded-t-2xl"
+/>
                   <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs px-2 py-1 rounded-full shadow">
                     Bestseller
                   </span>
