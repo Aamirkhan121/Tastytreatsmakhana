@@ -21,6 +21,10 @@ const About = () => {
       });
   }, []);
 
+  const handleProductClick = (id) => {
+    navigate(`/products/${id}`); // ✅ Correct route
+  };
+
   return (
     <main className="bg-gradient-to-br from-yellow-50 via-white to-orange-50 text-gray-900">
       {/* Hero Section */}
@@ -77,7 +81,8 @@ const About = () => {
             {products.map((item) => (
               <motion.article
                 key={item._id}
-                className="bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 p-6 text-center"
+                onClick={() => handleProductClick(item._id)} // ✅ Click pe navigate karega
+                className="cursor-pointer bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 p-6 text-center"
                 whileInView={{ opacity: 1, y: 0 }}
                 initial={{ opacity: 0, y: 40 }}
                 transition={{ duration: 0.3 }}
@@ -96,59 +101,11 @@ const About = () => {
           </div>
         )}
       </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-white px-4">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-4 text-center gap-6">
-          {[
-            { number: "100K+", label: "Makhanas Sold" },
-            { number: "10+", label: "Delicious Flavors" },
-            { number: "4.9★", label: "Customer Rating" },
-            { number: "100%", label: "Natural & Gluten Free" }
-          ].map((stat, idx) => (
-            <motion.div
-              key={idx}
-              className="space-y-2"
-              whileInView={{ scale: 1, opacity: 1 }}
-              initial={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.3, delay: idx * 0.1 }}
-            >
-              <h3 className="text-4xl font-bold text-orange-700">{stat.number}</h3>
-              <p className="text-sm text-gray-500">{stat.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-orange-600 text-white py-16 text-center px-4">
-        <motion.h2
-          className="text-3xl font-bold mb-3"
-          initial={{ y: 10, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-        >
-          Ready to Snack Smarter?
-        </motion.h2>
-        <motion.p
-          className="text-lg mb-6"
-          initial={{ y: 10, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.1 }}
-        >
-          Join the Makhana Revolution with Tasty Crunch today!
-        </motion.p>
-        <motion.button
-          onClick={() => navigate("/products")}
-          className="bg-white text-orange-600 font-bold py-2 px-6 rounded-full shadow-md hover:bg-orange-100 transition"
-          whileHover={{ scale: 1.05 }}
-        >
-          Explore Our Products
-        </motion.button>
-      </section>
     </main>
   );
 };
 
 export default About;
+
 
 
