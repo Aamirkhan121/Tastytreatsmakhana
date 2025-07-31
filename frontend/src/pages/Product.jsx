@@ -23,7 +23,7 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         const { data } = await axios.get(
-          'https://tastytreatsmakhana.onrender.com/api/products'
+          'https://api.tastycrunchmakhana.com/api/products'
         );
         setProducts(data); // sirf name, description, price mil rahe hain
       } catch (error) {
