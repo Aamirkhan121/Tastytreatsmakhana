@@ -5,9 +5,9 @@ const Dashboard = () => {
   const [counts, setCounts] = useState({ users: 0, orders: 0, products: 0 });
 
   const API = {
-    users: "https://tastytreatsmakhana.onrender.com/api/users/allusers",
-    orders: "https://tastytreatsmakhana.onrender.com/api/orders/admin",
-    products: "https://tastytreatsmakhana.onrender.com/api/products",
+    users: "https://api.tastycrunchmakhana.com/api/users/allusers",
+    orders: "https://api.tastycrunchmakhana.com/api/orders/admin",
+    products: "https://api.tastycrunchmakhana.com/api/products",
   };
 
   const fetchData = async (key, url) => {

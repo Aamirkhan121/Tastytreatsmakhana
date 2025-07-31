@@ -7,7 +7,7 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       const { data } = await axios.get(
-        "https://tastytreatsmakhana.onrender.com/api/orders/admin"
+        "https://api.tastycrunchmakhana.com/api/orders/admin"
       );
       console.log(">>> raw orders:", data);
       setOrders(data);

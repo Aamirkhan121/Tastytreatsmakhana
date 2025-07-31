@@ -6,18 +6,9 @@ import { motion } from 'framer-motion';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Products = () => {
-  const [products, setProducts] = useState([]); // product list
-  const [loading, setLoading] = useState(true); // loading status
+  const [products, setProducts] = useState([]); 
+  const [loading, setLoading] = useState(true); 
   const navigate = useNavigate();
-
-  // 🖼️ Static image list (backend se image nahi le rahe)
-  const staticImages = [
-    'https://res.cloudinary.com/ddg2abuue/image/upload/v1751860996/front_yellow-Up_page-0001_peqxii.jpg',
-    'https://res.cloudinary.com/ddg2abuue/image/upload/v1751860996/pink_front_page-0001_u7bfkv.jpg',
-    'https://res.cloudinary.com/ddg2abuue/image/upload/v1751860996/blue_front_page-0001_uxxeec.jpg',
-    'https://res.cloudinary.com/ddg2abuue/image/upload/v1751860997/grey_front_page-0001_bwc9ii.jpg',
-    'https://res.cloudinary.com/ddg2abuue/image/upload/v1751859850/orange_front_page-0001_nomtqr.jpg',
-  ];
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,12 +16,12 @@ const Products = () => {
         const { data } = await axios.get(
           'https://api.tastycrunchmakhana.com/api/products'
         );
-        setProducts(data); // sirf name, description, price mil rahe hain
+        setProducts(data);
       } catch (error) {
         console.error('Error fetching products:', error);
         toast.error('Failed to load products');
       } finally {
-        setLoading(false); // loading hatao
+        setLoading(false);
       }
     };
 
@@ -38,12 +29,7 @@ const Products = () => {
   }, []);
 
   const handleBuyNow = (product) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      toast.error('Please login to continue');
-      return navigate('/login'); // agar login nahi hai toh login page pe bhej do
-    }
-    navigate('/checkout', { state: { product } }); // warna checkout pe jao
+    navigate('/checkout', { state: { product } });
   };
 
   return (
@@ -53,21 +39,18 @@ const Products = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      {/* Background design */}
       <div className="absolute top-0 left-0 w-96 h-96 bg-pink-300 rounded-full blur-[120px] opacity-40 -z-10 animate-pulse"></div>
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-400 rounded-full blur-[100px] opacity-40 -z-10 animate-pulse"></div>
 
-      {/* Title */}
       <motion.h2
         className="text-5xl font-extrabold text-center text-orange-800 mb-14 drop-shadow-sm"
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        🍿 Premium Makhana Collection
+        Premium Makhana Collection
       </motion.h2>
 
-      {/* Agar loading hai to spinner dikhao */}
       {loading ? (
         <div className="flex flex-col items-center justify-center h-80">
           <div className="w-12 h-12 border-4 border-dotted rounded-full border-orange-500 animate-spin mb-4"></div>
@@ -92,13 +75,12 @@ const Products = () => {
                   className="relative"
                   onClick={() => navigate(`/products/${product._id}`)}
                 >
-                  {/* Static image use ho rahi hai */}
-                 <img
-  src={product.image}
-  alt={product.name}
-  loading="lazy"
-  className="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300 rounded-t-2xl"
-/>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    loading="lazy"
+                    className="w-full h-full object-center object-cover group-hover:scale-105 transition duration-300 rounded-t-2xl"
+                  />
                   <span className="absolute top-3 left-3 bg-orange-500 text-white text-xs px-2 py-1 rounded-full shadow">
                     Bestseller
                   </span>

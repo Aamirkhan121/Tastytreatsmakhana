@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post("https://tastytreatsmakhana.onrender.com/api/users/login", { email, password });
+    const res = await axios.post("https://api.tastycrunchmakhana.com/api/users/login", { email, password });
 
     // Store both token and user if login is successful
     if (res.data && res.data.token && res.data.user) {
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
-    const res = await axios.post("https://tastytreatsmakhana.onrender.com/api/users/register", { name, email, password });
+    const res = await axios.post("https://api.tastycrunchmakhana.com/api/users/register", { name, email, password });
 
     // Store both token and user if registration is successful
     if (res.data && res.data.token && res.data.user) {
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    axios.get("https://tastytreatsmakhana.onrender.com/api/users/logout");
+    axios.get("https://api.tastycrunchmakhana.com/api/users/logout");
     localStorage.removeItem("user");
     localStorage.removeItem("token"); // Remove token as well
     setUser(null);
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateUser = async (userData) => {
     try {
-      const response = await axios.patch(`https://tastytreatsmakhana.onrender.com/api/users/update/${user._id}`, userData, {
+      const response = await axios.patch(`https://api.tastycrunchmakhana.com/api/users/update/${user._id}`, userData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
 
   const deleteUser = async () => {
     try {
-      await axios.delete(`https://tastytreatsmakhana.onrender.com/api/users/delete/${user._id}`, {
+      await axios.delete(`https://api.tastycrunchmakhana.com/api/users/delete/${user._id}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

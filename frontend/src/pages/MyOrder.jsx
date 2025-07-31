@@ -38,7 +38,7 @@ const MyOrder = () => {
       const token = localStorage.getItem('token');
 
       await axios.patch(
-        `https://tastytreatsmakhana.onrender.com/api/orders/cancel/${orderId}`,
+        `https://api.tastycrunchmakhana.com/api/orders/cancel/${orderId}`,
         { status: 'Cancelled', cancellationReason: reason },
         {
           headers: {

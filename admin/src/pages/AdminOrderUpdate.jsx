@@ -12,7 +12,7 @@ const AdminOrderUpdate = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        'https://tastytreatsmakhana.onrender.com/api/orders/admin'
+        'https://api.tastycrunchmakhana.com/api/orders/admin'
       );
       setOrders(response.data);
 

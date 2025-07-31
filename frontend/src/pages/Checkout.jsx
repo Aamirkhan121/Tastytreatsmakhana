@@ -354,10 +354,9 @@
 
  // src/components/Checkout.jsx
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 const loadRazorpayScript = () => {
   return new Promise((resolve) => {
@@ -372,57 +371,68 @@ const loadRazorpayScript = () => {
 const Checkout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
   const product = location.state?.product;
   const passedQuantity = location.state?.quantity || 1;
-  const passedTotalPrice = location.state?.totalPrice || product?.price || 0;
-
-  const token = localStorage.getItem("token");
-
-  const [formData, setFormData] = useState({
+  const passedFormData = location.state?.formData || {
     name: "",
     email: "",
     phone: "",
     address: "",
-  });
-
-  const [quantity, setQuantity] = useState(passedQuantity);
-  const [totalPrice, setTotalPrice] = useState(passedTotalPrice);
-
- if (!product) {
-  return (
-    <div className="text-center mt-10">
-      <p className="text-red-600 mb-4">No product selected. Please go to Product Page.</p>
-      <Link
-        to="/products"
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 inline-block"
-      >
-        Go to Products
-      </Link>
-    </div>
-  )};
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const token = localStorage.getItem("token");
+
+  const [formData, setFormData] = useState(passedFormData);
+  const [quantity, setQuantity] = useState(passedQuantity);
+
+  // Delivery charge logic
+  const deliveryCharge = quantity >= 4 ? 0 : 50;
+  const totalPrice = (product?.price || 0) * quantity + deliveryCharge;
+
+  if (!product) {
+    return (
+      <div className="text-center mt-10">
+        <p className="text-red-600 mb-4">No product selected. Please go to Product Page.</p>
+        <Link
+          to="/products"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 inline-block"
+        >
+          Go to Products
+        </Link>
+      </div>
+    );
+  }
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleQuantityChange = (type) => {
     let newQty = quantity;
     if (type === "inc") newQty += 1;
     else if (type === "dec" && quantity > 1) newQty -= 1;
-
     setQuantity(newQty);
-    setTotalPrice(newQty * product.price);
+  };
+
+  const checkLogin = () => {
+    if (!token) {
+      toast.error("Please login to place your order");
+      navigate("/login", {
+        state: { from: "/checkout", product, quantity, formData },
+      });
+      return false;
+    }
+    return true;
   };
 
   const handlePlaceOrder = async () => {
+    if (!checkLogin()) return;
+
     const { name, email, phone, address } = formData;
-    if (!token) return toast.error("Please log in first");
-    if (!name || !email || !phone || !address) {
-      return toast.error("Please fill all fields");
-    }
+    if (!name || !email || !phone || !address) return toast.error("Please fill all fields");
 
     try {
       await axios.post(
-        "https://tastytreatsmakhana.onrender.com/api/orders/create",
+        "https://api.tastycrunchmakhana.com/api/orders/create",
         {
           productId: product._id,
           quantity,
@@ -443,18 +453,17 @@ const Checkout = () => {
   };
 
   const handleOnlinePayment = async () => {
+    if (!checkLogin()) return;
+
     const { name, email, phone, address } = formData;
-    if (!token) return toast.error("Please log in first");
-    if (!name || !email || !phone || !address) {
-      return toast.error("Please fill all fields");
-    }
+    if (!name || !email || !phone || !address) return toast.error("Please fill all fields");
 
     const res = await loadRazorpayScript();
     if (!res) return toast.error("Razorpay SDK failed to load");
 
     try {
       const orderResponse = await axios.post(
-        "https://tastytreatsmakhana.onrender.com/api/payment/order",
+        "https://api.tastycrunchmakhana.com/api/payment/order",
         {
           amount: totalPrice * 100,
           currency: "INR",
@@ -464,7 +473,6 @@ const Checkout = () => {
       );
 
       const order = orderResponse.data;
-
       const options = {
         key: process.env.REACT_APP_RAZORPAY_KEY || "rzp_live_KoIZrsBfMnwNHj",
         amount: order.amount,
@@ -475,7 +483,7 @@ const Checkout = () => {
         handler: async function (response) {
           try {
             await axios.post(
-              "https://tastytreatsmakhana.onrender.com/api/orders/create",
+              "https://api.tastycrunchmakhana.com/api/orders/create",
               {
                 productId: product._id,
                 quantity,
@@ -510,110 +518,51 @@ const Checkout = () => {
     }
   };
 
-  if (!product) return <p className="text-center text-red-600 mt-10">No product found.</p>;
-
+  const isCODDisabled = quantity < 4;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-yellow-100 py-12 px-4">
-
       <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl p-8 md:p-10">
         <h1 className="text-3xl font-bold text-orange-600 mb-6 text-center">🛒 Checkout</h1>
 
-      {product ? (
-  <div className="flex flex-col md:flex-row items-center gap-6 mb-6">
-    <img
-      src={product.image}
-      alt={product.name}
-      className="w-32 h-32 rounded-xl object-cover shadow-md"
-    />
-    <div>
-      <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
-      <p className="text-sm text-gray-600 mt-1">₹{product.price} / item</p>
-      <div className="flex items-center mt-3">
-        <button
-          onClick={() => handleQuantityChange("dec")}
-          className="bg-gray-200 px-3 py-1 rounded-l text-lg"
-        >
-          −
-        </button>
-        <span className="px-4 text-lg">{quantity}</span>
-        <button
-          onClick={() => handleQuantityChange("inc")}
-          className="bg-gray-200 px-3 py-1 rounded-r text-lg"
-        >
-          +
-        </button>
-      </div>
-      <p className="mt-2 text-green-700 font-medium">Total: ₹{totalPrice}</p>
-      {totalPrice >= 500 && (
-        <p className="text-sm text-blue-500 mt-1">🎉 Free Delivery applied!</p>
-      )}
-    </div>
-  </div>
-) : (
-  <p className="text-center text-gray-600 mb-6">
-    No product selected. Please return to <span className="text-orange-600 font-semibold">Products</span> page.
-  </p>
-)}
-
-
-        <div className="space-y-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-400 outline-none"
+        <div className="flex flex-col md:flex-row items-center gap-6 mb-6">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-32 h-32 rounded-xl object-cover shadow-md"
           />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-400 outline-none"
-          />
-          <input
-            type="tel"
-            name="phone"
-            placeholder="Phone Number"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-400 outline-none"
-          />
-          <textarea
-            name="address"
-            placeholder="Shipping Address"
-            value={formData.address}
-            onChange={handleChange}
-            rows="3"
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-400 outline-none"
-          />
+          <div>
+            <h3 className="text-xl font-semibold text-gray-800">{product.name}</h3>
+            <p className="text-sm text-gray-600 mt-1">₹{product.price} / item</p>
+            <div className="flex items-center mt-3">
+              <button onClick={() => handleQuantityChange("dec")} className="bg-gray-200 px-3 py-1 rounded-l text-lg">−</button>
+              <span className="px-4 text-lg">{quantity}</span>
+              <button onClick={() => handleQuantityChange("inc")} className="bg-gray-200 px-3 py-1 rounded-r text-lg">+</button>
+            </div>
+            <p className="mt-2 text-green-700 font-medium">
+              Total: ₹{totalPrice} {deliveryCharge > 0 && `(₹${deliveryCharge} Delivery)`}
+            </p>
+            {quantity >= 4 && (
+              <p className="text-sm text-blue-500 mt-1">🎉 Free Delivery on 4+ products!</p>
+            )}
+          </div>
         </div>
 
-      {product && (
-  <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
-    <button
-      className={`w-full md:w-auto px-6 py-3 rounded-full text-white font-semibold transition ${
-        totalPrice >= 500
-          ? "bg-orange-500 hover:bg-orange-600"
-          : "bg-gray-400 cursor-not-allowed"
-      }`}
-      onClick={handlePlaceOrder}
-      disabled={totalPrice < 500}
-    >
-      🚚 Cash on Delivery
-    </button>
-    <button
-      className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition"
-      onClick={handleOnlinePayment}
-    >
-      💳 Pay Online
-    </button>
-  </div>
-)}
+        <div className="space-y-4">
+          <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-400 outline-none" />
+          <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-400 outline-none" />
+          <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-400 outline-none" />
+          <textarea name="address" placeholder="Shipping Address" value={formData.address} onChange={handleChange} rows="3" className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-orange-400 outline-none" />
+        </div>
 
+        <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
+          <button disabled={isCODDisabled} className={`w-full md:w-auto px-6 py-3 rounded-full transition ${isCODDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600 text-white font-semibold"}`} onClick={handlePlaceOrder}>
+            🚚 Cash on Delivery
+          </button>
+          <button className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition" onClick={handleOnlinePayment}>
+            💳 Pay Online
+          </button>
+        </div>
       </div>
     </div>
   );

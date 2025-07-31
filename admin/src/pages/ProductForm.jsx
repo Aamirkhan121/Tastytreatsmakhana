@@ -17,7 +17,7 @@ const ProductForm = () => {
   // For edit
   useEffect(() => {
     if (id) {
-      axios.get(`https://tastytreatsmakhana.onrender.com/api/products/${id}`).then((res) => {
+      axios.get(`https://api.tastycrunchmakhana.com/api/products/${id}`).then((res) => {
         setFormData(res.data);
       });
     }

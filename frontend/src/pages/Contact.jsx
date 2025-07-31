@@ -15,7 +15,7 @@ const Contact = () => {
 
     try {
       const response = await axios.post(
-        "https://tastytreatsmakhana.onrender.com/api/contact/submit",
+        "https://api.tastycrunchmakhana.com/api/contact/submit",
         contactData
       );
       if (response.data.success) {
