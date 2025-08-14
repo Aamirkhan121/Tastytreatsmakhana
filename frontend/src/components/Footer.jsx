@@ -85,9 +85,6 @@ const Footer = () => {
         {/* Bottom Info */}
         <div className="mt-12 text-center text-sm text-gray-500 border-t border-orange-100 pt-4">
           © {new Date().getFullYear()} <span className="font-bold text-orange-700">TastyCrunchMakhana.com</span>. All rights reserved. <br />
-          Developed by <span className="text-blue-600 font-semibold">Md Aamir Khan</span> — 
-          <a href="mailto:aamir73690@gmail.com" className="ml-1 text-blue-500 hover:underline">aamir73690@gmail.com</a> | 
-          <a href="tel:+917369041570" className="ml-1 text-blue-500 hover:underline">+91 7369041570</a>
         </div>
       </footer>
 
