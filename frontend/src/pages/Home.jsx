@@ -7,19 +7,19 @@ import Instagram from '../components/Instagram.jsx';
   const Home = () => {
     const bestsellers = [
       {
-        id: "6803580c62e16f0e6bc2b658",
+        slug: "Peri-peri-makhana",
         img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095327_kvwqat.png",
         title: "Peri Peri Roasted Snack in Olive Oil (60g)",
         desc: "A spicy and flavorful delight that packs a punch!"
       },
       {
-        id: "68031cfeeb5f443ef51cab12",
+        slug: "Cream-onion-makhana",
         img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095211_jvwnuh.png",
         title: "Roasted Cream & Onion Snack | Gluten Free | Zero Trans Fat",
         desc: "Smooth, tangy & crunchy combo. Perfect for anytime snacking."
       },
       {
-        id: "68031d81eb5f443ef51cab14",
+        slug: "Himalayan-salted-makhana",
         img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095359_uhapen.png",
         title: "Himalayan Salted | 60g",
         desc: "Simple, crunchy & preservative-free. Lightly seasoned with Himalayan Salt."
@@ -75,7 +75,7 @@ import Instagram from '../components/Instagram.jsx';
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 max-w-7xl mx-auto">
             {bestsellers.map((item, i) => (
               <article key={i} className="bg-white border border-yellow-200 rounded-3xl shadow-xl hover:shadow-2xl p-6 transition duration-300 transform hover:-translate-y-1 animate-fade-in-up delay-100">
-                <Link to={`/products/${item.id}`}>
+                <Link to={`/products/${item.slug}`}>
                   <img
                     src={item.img}
                     alt={item.title}

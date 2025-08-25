@@ -21,8 +21,8 @@ const About = () => {
       });
   }, []);
 
-  const handleProductClick = (id) => {
-    navigate(`/products/${id}`); // ✅ Correct route
+  const handleProductClick = (slug) => {
+    navigate(`/products/${slug}`); // ✅ Correct route
   };
 
   return (
@@ -80,8 +80,8 @@ const About = () => {
           <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-3 gap-10">
             {products.map((item) => (
               <motion.article
-                key={item._id}
-                onClick={() => handleProductClick(item._id)} // ✅ Click pe navigate karega
+                key={item.slug}
+                onClick={() => handleProductClick(item.slug)} // ✅ Click pe navigate karega
                 className="cursor-pointer bg-white rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 p-6 text-center"
                 whileInView={{ opacity: 1, y: 0 }}
                 initial={{ opacity: 0, y: 40 }}
