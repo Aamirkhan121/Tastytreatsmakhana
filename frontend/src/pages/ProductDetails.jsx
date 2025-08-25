@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { Star, Minus, Plus } from 'lucide-react';
 
 const ProductDetails = () => {
-  const { productId } = useParams();
+  const { slug } = useParams();
   const [products, setProducts] = useState(null);
   const [mainImage, setMainImage] = useState('');
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const res = await axios.get(`https://api.tastycrunchmakhana.com/api/products/${productId}`);
+        const res = await axios.get(`https://api.tastycrunchmakhana.com/api/products/${slug}`);
         setProducts(res.data);
         setMainImage(res.data.image);
       } catch (err) {
@@ -26,7 +26,7 @@ const ProductDetails = () => {
       }
     };
     fetchProductDetails();
-  }, [productId]);
+  }, [slug]);
 
   const handleBuyNow = () => {
     navigate("/checkout", {
@@ -88,7 +88,7 @@ const ProductDetails = () => {
             name: products.name,
             image: [products.image, ...(products.extraImages || [])],
             description: products.description,
-            sku: productId,
+            sku: slug,
             offers: {
               "@type": "Offer",
               priceCurrency: "INR",

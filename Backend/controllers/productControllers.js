@@ -20,6 +20,18 @@ const getProductById = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+const getProductBySlug = async (req, res) => {
+  try {
+    const product = await Product.findOne({ slug: req.params.slug });
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 const createProduct = async (req, res) => {
   const { name, image, description, price,extraImages  } = req.body;
   const product = new Product({
@@ -83,5 +95,5 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-export { getProducts, getProductById, createProduct, updateProduct, deleteProduct };
+export { getProducts, getProductById,getProductBySlug,  createProduct, updateProduct, deleteProduct };
 // import Product from "../models/Product.js";

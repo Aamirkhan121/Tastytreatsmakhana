@@ -65,7 +65,7 @@ const Products = () => {
           ) : (
             products.map((product, index) => (
               <motion.div
-                key={product._id}
+                key={product.slug}
                 className="bg-white/70 backdrop-blur-md border border-white/30 rounded-2xl shadow-xl transition duration-300 hover:-translate-y-2 hover:shadow-2xl cursor-pointer overflow-hidden group"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ const Products = () => {
               >
                 <div
                   className="relative"
-                  onClick={() => navigate(`/products/${product._id}`)}
+                  onClick={() => navigate(`/products/${product.slug}`)}
                 >
                   <img
                     src={product.image}
