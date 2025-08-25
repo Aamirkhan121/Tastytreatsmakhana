@@ -90,19 +90,6 @@ import Instagram from '../components/Instagram.jsx';
           </div>
         </section>
 
-       {/* 📺 YouTube Section */}
-        <section className="py-24 px-6 text-center bg-orange-50">
-        <h2 className="text-4xl font-extrabold text-orange-700 mb-4 drop-shadow-md animate-fade-in-up">
-          Watch Us On YouTube
-        </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12 animate-fade-in-up delay-100">
-          Discover our recipes, behind-the-scenes, and fun snack content!
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
-          <YouTubeFeed />
-            </div>
-      </section>
 
        {/* 📺 Instagram Section */}
         <section className="py-24 px-6 text-center bg-orange-50">
@@ -118,6 +105,19 @@ import Instagram from '../components/Instagram.jsx';
   {/* </div> */}
       </section>
 
+       {/* 📺 YouTube Section */}
+        <section className="py-24 px-6 text-center bg-orange-50">
+        <h2 className="text-4xl font-extrabold text-orange-700 mb-4 drop-shadow-md animate-fade-in-up">
+          Watch Us On YouTube
+        </h2>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-12 animate-fade-in-up delay-100">
+          Discover our recipes, behind-the-scenes, and fun snack content!
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+          <YouTubeFeed />
+            </div>
+      </section>
 
         {/* 🎯 Call To Action */}
         <section className="bg-orange-600 text-white py-20 text-center px-6">
