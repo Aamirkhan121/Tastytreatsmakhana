@@ -7,19 +7,19 @@ import Instagram from '../components/Instagram.jsx';
   const Home = () => {
     const bestsellers = [
       {
-        slug: "Peri-peri-makhana",
+        slug: "peri-peri-makhana",
         img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095327_kvwqat.png",
         title: "Peri Peri Roasted Snack in Olive Oil (60g)",
         desc: "A spicy and flavorful delight that packs a punch!"
       },
       {
-        slug: "Cream-onion-makhana",
+        slug: "cream-onion-makhana",
         img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095211_jvwnuh.png",
         title: "Roasted Cream & Onion Snack | Gluten Free | Zero Trans Fat",
         desc: "Smooth, tangy & crunchy combo. Perfect for anytime snacking."
       },
       {
-        slug: "Himalayan-salted-makhana",
+        slug: "himalayan-salted-makhana",
         img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095359_uhapen.png",
         title: "Himalayan Salted | 60g",
         desc: "Simple, crunchy & preservative-free. Lightly seasoned with Himalayan Salt."
