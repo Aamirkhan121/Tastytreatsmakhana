@@ -557,7 +557,7 @@ const Checkout = () => {
 
         <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
           <button disabled={isCODDisabled} className={`w-full md:w-auto px-6 py-3 rounded-full transition ${isCODDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600 text-white font-semibold"}`} onClick={handlePlaceOrder}>
-            🚚 Cash on Delivery
+            🚚 (For Order Above ₹500)
           </button>
           <button className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition" onClick={handleOnlinePayment}>
             💳 Pay Online
