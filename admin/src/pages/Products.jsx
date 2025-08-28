@@ -9,7 +9,7 @@ const Products = () => {
 
   useEffect(() => {
     axios
-      .get("https://tastytreatsmakhana.onrender.com/api/products")
+      .get("https://api.tastycrunchmakhana.com/api/products")
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
@@ -51,7 +51,7 @@ const Products = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <div
-              key={product._id}
+              key={product.slug}
               className="bg-white rounded-xl shadow hover:shadow-lg transition-all duration-300 border flex flex-col"
             >
               <div className="w-full h-56 overflow-hidden rounded-t-xl">
@@ -75,7 +75,7 @@ const Products = () => {
 
                 <div className="flex justify-between items-center mt-4">
                   <Link
-                    to={`/admin/products/edit/${product._id}`}
+                    to={`/admin/products/edit/${product.slug}`}
                     className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm"
                   >
                     <FiEdit /> Edit
