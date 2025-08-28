@@ -12,11 +12,11 @@ const HomeSlider = () => {
         <div className="flex w-max animate-marquee gap-16">
           {Array(2).fill(
             <span className="whitespace-nowrap text-lg font-semibold">
-              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
-              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
-              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
-              🎉 Free Delivery on Orders Above ₹500! 🚚 &nbsp;
-              🎉 Free Delivery on Orders Above ₹500! 🚚   
+              🎉 Cash on delivery For Orders Above ₹500! 🚚 &nbsp;
+              🎉 Cash on delivery For Orders Above ₹500 ! 🚚 &nbsp;
+              🎉 Cash on delivery For Orders Above ₹500   ! 🚚 &nbsp;
+              🎉 Cash on delivery For Orders Above ₹500  ! 🚚 &nbsp;
+              🎉 Cash on delivery For Orders Above ₹500 ! 🚚   
             </span>
           )}
         </div>
