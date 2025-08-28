@@ -9,7 +9,7 @@ const Products = () => {
 
   useEffect(() => {
     axios
-      .get("https://tastytreatsmakhana.onrender.com/api/products")
+      .get("https://api.tastycrunchmakhana.com/api/products")
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
