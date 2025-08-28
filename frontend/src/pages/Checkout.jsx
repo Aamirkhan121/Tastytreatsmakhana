@@ -388,7 +388,7 @@ const Checkout = () => {
 
   // Delivery charge logic
   const deliveryCharge = quantity >= 4 ? 0 : 40;
-  const totalPrice = (product?.price || 0) * quantity + deliveryCharge;
+  const baseTotalPrice = (product?.price || 0) * quantity + deliveryCharge;
 
   if (!product) {
     return (
@@ -424,6 +424,7 @@ const Checkout = () => {
     return true;
   };
 
+  // Cash on Delivery Order
   const handlePlaceOrder = async () => {
     if (!checkLogin()) return;
 
@@ -436,7 +437,7 @@ const Checkout = () => {
         {
           productId: product._id,
           quantity,
-          totalAmount: totalPrice,
+          totalAmount: baseTotalPrice, // COD has no discount
           name,
           email,
           phone,
@@ -446,17 +447,21 @@ const Checkout = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success("Order placed with Cash on Delivery!");
-      navigate("/products");
+      navigate("/my-orders");
     } catch (err) {
       toast.error("Failed to place order");
     }
   };
 
+  // Online Payment with 5% Discount
   const handleOnlinePayment = async () => {
     if (!checkLogin()) return;
 
     const { name, email, phone, address } = formData;
     if (!name || !email || !phone || !address) return toast.error("Please fill all fields");
+
+    // Apply 5% discount for online payments
+    const discountedTotal = Math.round(baseTotalPrice * 0.95);
 
     const res = await loadRazorpayScript();
     if (!res) return toast.error("Razorpay SDK failed to load");
@@ -465,7 +470,7 @@ const Checkout = () => {
       const orderResponse = await axios.post(
         "https://api.tastycrunchmakhana.com/api/payment/order",
         {
-          amount: totalPrice * 100,
+          amount: discountedTotal * 100, // Razorpay works in paise
           currency: "INR",
           receipt: `receipt_order_${Math.random().toString(36).substring(7)}`,
         },
@@ -487,7 +492,7 @@ const Checkout = () => {
               {
                 productId: product._id,
                 quantity,
-                totalAmount: totalPrice,
+                totalAmount: discountedTotal, // store discounted price in DB
                 name,
                 email,
                 phone,
@@ -501,8 +506,8 @@ const Checkout = () => {
               },
               { headers: { Authorization: `Bearer ${token}` } }
             );
-            toast.success("Payment successful and order placed!");
-            navigate("/products");
+            toast.success("Payment successful with 5% discount applied!");
+            navigate("/my-orders");
           } catch (error) {
             toast.error("Order placement failed after payment");
           }
@@ -540,11 +545,14 @@ const Checkout = () => {
               <button onClick={() => handleQuantityChange("inc")} className="bg-gray-200 px-3 py-1 rounded-r text-lg">+</button>
             </div>
             <p className="mt-2 text-green-700 font-medium">
-              Total: ₹{totalPrice} {deliveryCharge > 0 && `(₹${deliveryCharge} Delivery)`}
+              Total: ₹{baseTotalPrice} {deliveryCharge > 0 && `(₹${deliveryCharge} Delivery)`}
             </p>
             {quantity >= 4 && (
               <p className="text-sm text-blue-500 mt-1">🎉 Free Delivery on 4+ products!</p>
             )}
+            <p className="mt-1 text-sm text-green-600 font-semibold">
+              💳 Online Payment Discount: Save 5% → Pay ₹{Math.round(baseTotalPrice * 0.95)}
+            </p>
           </div>
         </div>
 
@@ -556,11 +564,26 @@ const Checkout = () => {
         </div>
 
         <div className="flex flex-col md:flex-row gap-4 mt-8 justify-center">
-          <button disabled={isCODDisabled} className={`w-full md:w-auto px-6 py-3 rounded-full transition ${isCODDisabled ? "bg-gray-400 cursor-not-allowed" : "bg-orange-500 hover:bg-orange-600 text-white font-semibold"}`} onClick={handlePlaceOrder}>
-            🚚 (For Order Above ₹500)
+          <button
+            disabled={isCODDisabled}
+            className={`w-full md:w-auto px-6 py-3 rounded-full transition text-center ${
+              isCODDisabled
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-orange-500 hover:bg-orange-600 text-white font-semibold"
+            }`}
+            onClick={handlePlaceOrder}
+          >
+            <div className="flex flex-col items-center leading-tight">
+              <span className="text-base font-semibold">💵 Cash on Delivery</span>
+              <span className="text-sm">🚚 (For Order Above ₹500)</span>
+            </div>
           </button>
-          <button className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition" onClick={handleOnlinePayment}>
-            💳 Pay Online
+
+          <button
+            className="w-full md:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-full transition"
+            onClick={handleOnlinePayment}
+          >
+            💳 Pay Online (5% OFF)
           </button>
         </div>
       </div>
