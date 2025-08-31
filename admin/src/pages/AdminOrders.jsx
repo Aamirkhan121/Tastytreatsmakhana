@@ -53,7 +53,7 @@ const AdminOrders = () => {
         </thead>
         <tbody>
           <tr>
-            <td style="border:1px solid #ddd; padding:8px;">${order._id}</td>
+            <td style="border:1px solid #ddd; padding:8px;">${order.orderId || order._id}</td>
             <td style="border:1px solid #ddd; padding:8px;">${order.productId?.name || "N/A"}</td>
             <td style="border:1px solid #ddd; padding:8px;">${order.quantity}</td>
             <td style="border:1px solid #ddd; padding:8px;">${order.paymentMethod}</td>
@@ -122,8 +122,8 @@ const AdminOrders = () => {
                     }`}
                   >
                     <td className="py-3 px-6 font-mono max-w-[150px] truncate text-gray-700">
-                      {order._id}
-                    </td>
+                  {order.orderId || order._id}
+                  </td>
                     <td className="py-3 px-6 text-gray-700">{order.name}</td>
                     <td className="py-3 px-6 text-gray-700">
                       {order.productId?.name || "—"}
