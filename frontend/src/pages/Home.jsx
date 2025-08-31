@@ -8,19 +8,19 @@ import Instagram from '../components/Instagram.jsx';
     const bestsellers = [
       {
         slug: "peri-peri",
-        img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095327_kvwqat.png",
+        img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1756563714/makhana_orange_v87tkp.jpg",
         title: "Peri Peri Roasted Snack in Olive Oil (60g)",
         desc: "A spicy and flavorful delight that packs a punch!"
       },
       {
         slug: "cream-onion",
-        img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095211_jvwnuh.png",
+        img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1756563715/green_makhana_1_jucmhv.jpg",
         title: "Roasted Cream & Onion Snack | Gluten Free | Zero Trans Fat",
         desc: "Smooth, tangy & crunchy combo. Perfect for anytime snacking."
       },
       {
         slug: "himalayan-salted",
-        img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1746073580/Screenshot_2025-05-01_095359_uhapen.png",
+        img: "https://res.cloudinary.com/ddg2abuue/image/upload/v1756563714/salted_makhana_ww58aq.jpg",
         title: "Himalayan Salted | 60g",
         desc: "Simple, crunchy & preservative-free. Lightly seasoned with Himalayan Salt."
       },
