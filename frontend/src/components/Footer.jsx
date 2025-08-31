@@ -6,6 +6,7 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import logo from "../assets/tastycrunch-logo.jpg"; // ✅ Correct path
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -31,22 +32,53 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Quick Links */}
+                   {/* Quick Links */}
           <div>
             <h3 className="text-xl font-semibold text-orange-700 mb-3">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              {["Home", "Products", "About Us", "Contact", "Terms & Conditions"].map((item, index) => (
-                <li key={index}>
-                  <a
-                    href={`/${item.toLowerCase().replace(/ /g, "-")}`}
-                    className="text-gray-700 hover:text-orange-600 transition duration-200"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link
+                  to="/"
+                  className="text-gray-700 hover:text-orange-600 transition duration-200"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products"
+                  className="text-gray-700 hover:text-orange-600 transition duration-200"
+                >
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/about"
+                  className="text-gray-700 hover:text-orange-600 transition duration-200"
+                >
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-gray-700 hover:text-orange-600 transition duration-200"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms-and-conditions"
+                  className="text-gray-700 hover:text-orange-600 transition duration-200"
+                >
+                  Terms & Conditions
+                </Link>
+              </li>
             </ul>
           </div>
+
 
           {/* Contact Info */}
           <div>
