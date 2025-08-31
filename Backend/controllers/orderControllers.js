@@ -90,11 +90,8 @@ import crypto from 'crypto';
 import Order from "../models/Order.js";
 
 
-const generateOrderId = () => {
-  const prefix = "OD"; // Flipkart style prefix
-  const timestamp = Date.now().toString().slice(-6); // last 6 digits of timestamp
-  const random = Math.floor(1000 + Math.random() * 9000); // random 4-digit number
-  return `${prefix}${timestamp}${random}`;
+const formatOrderId = (num) => {
+  return num.toString().padStart(6, "0");
 };
 
 export const placeOrder = async (req, res) => {
@@ -114,6 +111,11 @@ export const placeOrder = async (req, res) => {
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
+     // 🔹 Get last order and generate next orderId
+    const lastOrder = await Order.findOne().sort({ createdAt: -1 });
+    const nextOrderNumber = lastOrder ? parseInt(lastOrder.orderId) + 1 : 1;
+    const newOrderId = formatOrderId(nextOrderNumber);
+
     if (paymentMethod === 'Online') {
       if (!paymentInfo || !paymentInfo.id || !paymentInfo.order_id || !paymentInfo.signature) {
         return res.status(400).json({ message: 'Payment info is required for online payments' });
@@ -129,7 +131,7 @@ export const placeOrder = async (req, res) => {
     }
 
     const newOrder = new Order({
-      orderId: generateOrderId(),
+      orderId: newOrderId,
       userId: req.user._id,
       productId,
       quantity: quantity || 1,

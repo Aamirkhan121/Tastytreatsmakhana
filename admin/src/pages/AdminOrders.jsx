@@ -75,7 +75,7 @@ const AdminOrders = () => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       pdf.addImage(imgData, "PNG", 10, 10, 190, 0);
-      pdf.save(`invoice_${order._id}.pdf`);
+      pdf.save(`invoice_${order.orderId || order._id}.pdf`);
       document.body.removeChild(invoice);
     });
   };
