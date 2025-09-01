@@ -50,6 +50,7 @@ const AdminOrders = () => {
             <th style="border:1px solid #ddd; padding:8px; text-align:left;">Order ID</th>
             <th style="border:1px solid #ddd; padding:8px; text-align:left;">Product</th>
             <th style="border:1px solid #ddd; padding:8px; text-align:left;">Qty</th>
+            <th style="border:1px solid #ddd; padding:8px; text-align:left;">Price</th>
             <th style="border:1px solid #ddd; padding:8px; text-align:left;">Payment</th>
             <th style="border:1px solid #ddd; padding:8px; text-align:left;">Status</th>
           </tr>
@@ -59,6 +60,7 @@ const AdminOrders = () => {
             <td style="border:1px solid #ddd; padding:8px;">${order.orderId || order._id}</td>
             <td style="border:1px solid #ddd; padding:8px;">${order.productId?.name || "N/A"}</td>
             <td style="border:1px solid #ddd; padding:8px;">${order.quantity}</td>
+            <td style="border:1px solid #ddd; padding:8px;">₹${order.price || "0"}</td>
             <td style="border:1px solid #ddd; padding:8px;">${order.paymentMethod}</td>
             <td style="border:1px solid #ddd; padding:8px;">${order.status || "Confirmed"}</td>
           </tr>
@@ -66,6 +68,7 @@ const AdminOrders = () => {
       </table>
 
       <p><b>Order Date:</b> ${new Date(order.createdAt).toLocaleDateString()}</p>
+      <h3 style="margin:15px 0; color:#2563eb;">Total: ₹${order.price || "0"}</h3>
 
       <div style="margin-top:30px; text-align:center; font-size:12px; color:#666;">
         <p>Thank you for shopping with TastyCrunch Makhana! 🙏</p>
