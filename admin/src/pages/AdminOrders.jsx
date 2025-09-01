@@ -12,6 +12,7 @@ const AdminOrders = () => {
         "https://api.tastycrunchmakhana.com/api/orders/admin"
       );
       setOrders(data);
+      console.log("Fetched orders:", data);
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
@@ -39,6 +40,8 @@ const AdminOrders = () => {
       <p><b>Email:</b> ${order.email}</p>
       <p><b>Phone:</b> ${order.phone}</p>
       <p><b>Address:</b> ${order.address}</p>
+      
+
 
       <h3 style="margin:15px 0; color:#2563eb;">Order Details</h3>
       <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
@@ -96,6 +99,7 @@ const AdminOrders = () => {
                   "Customer",
                   "Product",
                   "Qty",
+                  "Price",
                   "Payment",
                   "Email",
                   "Phone",
@@ -129,6 +133,7 @@ const AdminOrders = () => {
                       {order.productId?.name || "—"}
                     </td>
                     <td className="py-3 px-6 text-gray-700">{order.quantity}</td>
+                    <td className="py-3 px-6 text-gray-700">₹{order.price || "—"}</td>
                     <td className="py-3 px-6">
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-medium ${

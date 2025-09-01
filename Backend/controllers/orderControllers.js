@@ -88,6 +88,7 @@
 
 import crypto from 'crypto';
 import Order from "../models/Order.js";
+import Product from '../models/Product.js';
 
 
 const formatOrderId = (num) => {
@@ -111,9 +112,18 @@ export const placeOrder = async (req, res) => {
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
+    // product price fetching
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    const qty = quantity || 1;
+    const totalPrice = product.price * qty;
+
      // 🔹 Get last order and generate next orderId
     const lastOrder = await Order.findOne().sort({ createdAt: -1 });
-    const nextOrderNumber = lastOrder ? parseInt(lastOrder.orderId) + 1 : 1;
+    const lastOrderNum = lastOrder && lastOrder.orderId ? parseInt(lastOrder.orderId) : 0;
+    const nextOrderNumber = isNaN(lastOrderNum) ? 1 : lastOrderNum + 1;
     const newOrderId = formatOrderId(nextOrderNumber);
 
     if (paymentMethod === 'Online') {
@@ -134,7 +144,8 @@ export const placeOrder = async (req, res) => {
       orderId: newOrderId,
       userId: req.user._id,
       productId,
-      quantity: quantity || 1,
+      quantity: qty,
+      price: totalPrice,
       name,
       email,
       phone,
