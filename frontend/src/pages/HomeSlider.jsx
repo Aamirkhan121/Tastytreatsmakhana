@@ -10,15 +10,19 @@ const HomeSlider = () => {
       {/* 🔁 Seamless Marquee */}
       <div className="overflow-hidden bg-orange-500 text-white py-2 relative z-20">
         <div className="flex w-max animate-marquee gap-16">
-          {Array(2).fill(
-            <span className="whitespace-nowrap text-lg font-semibold">
-              🎉 Cash on delivery For Orders Above ₹500! 🚚 &nbsp;
-              🎉 Cash on delivery For Orders Above ₹500 ! 🚚 &nbsp;
-              🎉 Cash on delivery For Orders Above ₹500   ! 🚚 &nbsp;
-              🎉 Cash on delivery For Orders Above ₹500  ! 🚚 &nbsp;
-              🎉 Cash on delivery For Orders Above ₹500 ! 🚚   
-            </span>
-          )}
+          {Array(2).fill(null).map((_, index) => (
+  <span
+    key={index}
+    className="whitespace-nowrap text-lg font-semibold"
+  >
+    🎉 Cash on delivery For Orders Above ₹500! 🚚 &nbsp;
+    🎉 Cash on delivery For Orders Above ₹500 ! 🚚 &nbsp;
+    🎉 Cash on delivery For Orders Above ₹500   ! 🚚 &nbsp;
+    🎉 Cash on delivery For Orders Above ₹500  ! 🚚 &nbsp;
+    🎉 Cash on delivery For Orders Above ₹500 ! 🚚   
+  </span>
+))}
+
         </div>
       </div>
 
