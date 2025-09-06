@@ -28,7 +28,7 @@ const Instagram = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
         {reels.map((reel) => (
           <div key={reel.id} className="rounded overflow-hidden shadow-md">
-            <InstagramEmbed url={`${reel.url}embed`} width="100%" />
+            <InstagramEmbed url={reel.url} width="100%" />
             {/* SEO Fallback (in case iframe doesn’t load) */}
             <p className="sr-only">{reel.title}</p>
           </div>

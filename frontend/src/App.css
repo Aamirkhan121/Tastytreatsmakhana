@@ -1,0 +1,13 @@
+.instagram-media {
+  max-width: 100% !important;
+  min-width: 100% !important;
+  border-radius: 10px; /* optional */
+  overflow: hidden;
+}
+
+.instagram-media img {
+  display: block !important;
+  max-width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+}
