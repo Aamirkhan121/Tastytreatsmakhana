@@ -1,20 +1,22 @@
 // src/pages/Cart.jsx
-// src/pages/Cart.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { API_BASE, authHeaders } from "../../utils/api";
+import { useCart } from "../../context/CartContext";
+import { authHeaders } from "../../utils/api";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
+  const { setCart } = useCart(); // sync with context
 
   const fetchCart = async () => {
     try {
       const { data } = await axios.get(`https://api.tastycrunchmakhana.com/api/cart`, { headers: authHeaders() });
       setCartItems(data.products || []);
-    } catch (err) {
+      setCart(data.products || []); // sync with context
+    } catch {
       toast.error("Failed to load cart");
     }
   };
@@ -23,6 +25,7 @@ const Cart = () => {
     try {
       const { data } = await axios.post(`https://api.tastycrunchmakhana.com/api/cart/remove`, { productId }, { headers: authHeaders() });
       setCartItems(data.products || []);
+      setCart(data.products || []); // update context so Navbar badge updates
       toast.success("Item removed");
     } catch {
       toast.error("Failed to remove item");
@@ -62,16 +65,13 @@ const Cart = () => {
 
           <div className="bg-white p-6 rounded-2xl shadow-lg text-right">
             <h4 className="text-2xl font-bold text-orange-700">Total: ₹{calculateTotal()}</h4>
-            <button
-              onClick={proceedToCheckout}
-              className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-3 text-sm font-semibold rounded-lg"
-            >
-              Proceed to Checkout
-            </button>
+            <button onClick={proceedToCheckout} className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-3 text-sm font-semibold rounded-lg">Proceed to Checkout</button>
           </div>
         </div>
       )}
     </div>
   );
 };
+
 export default Cart;
+
