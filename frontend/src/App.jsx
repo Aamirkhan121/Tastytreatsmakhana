@@ -23,8 +23,8 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Subscribe from './pages/Subscribe'
-// import CartPage from './pages/CartPage'
-// import { CartProvider } from '../context/CartContext'
+import CartPage from './pages/CartPage'
+import { CartProvider } from '../context/CartContext'
 // import Checkout from './components/CheckOut'
 
 
@@ -33,7 +33,7 @@ const App = () => {
   return (
     <>
       <AuthProvider>
-        {/* <CartProvider> */}
+        <CartProvider>
       <BrowserRouter>
       <Navbar/>
       <div className="pt-16">
@@ -52,7 +52,7 @@ const App = () => {
         {/* <Route path="/about" element={<ProtectedRoute> <About/> </ProtectedRoute>} /> */}
         {/* <Route path="/products" element={<ProtectedRoute> <Product/> </ProtectedRoute>} /> */}
         {/* <Route path="/products/:productId" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} /> */}
-        {/* <Route path="/cart" element={<ProtectedRoute> <CartPage/> </ProtectedRoute>} /> */}
+        <Route path="/cart" element={<ProtectedRoute> <CartPage/> </ProtectedRoute>} />
            {/* <Route path="/my-orders" element={<ProtectedRoute> <MyOrder /> </ProtectedRoute>} />  */}
            {/* <Route  path="/profile"  element={<ProtectedRoute> <ProfilePage /> </ProtectedRoute> }/> */}
         <Route path="/" element={ <Home/>  } />
@@ -82,7 +82,7 @@ const App = () => {
       <Footer/>
        <ToastContainer position="top-center" autoClose={3000} />
       </BrowserRouter>
-      {/* </CartProvider> */}
+      </CartProvider>
       </AuthProvider>
     </>
   )

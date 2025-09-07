@@ -9,7 +9,7 @@ import userRouter from './routes/userRoutes.js'
 import orderRouter from './routes/orderRoutes.js';
 import adminRouter from './routes/adminRoutes.js';
 import Razorpay from 'razorpay';
-// import cartRouter from './routes/cartRoutes.js';
+import cartRouter from './routes/cartRoutes.js';
 // import phonepeRouter from './routes/phonepeRoutes.js';
 
 
@@ -29,6 +29,7 @@ app.use('/api/contact',contactRouter);
 app.use('/api/users', userRouter); // Assuming you have a userRouter for authentication
 app.use('/api/orders', orderRouter ); // Assuming you have an orderRouter for order operations
  app.use('/api', adminRouter); // Assuming you have a cartRouter for cart operations
+ app.use('/api/cart', cartRouter); // Assuming you have a cartRouter for cart operations
 app.post("/api/payment/order", async(req,res)=>{
   try {
     const razorpay = new Razorpay({
