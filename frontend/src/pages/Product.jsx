@@ -26,32 +26,38 @@ const Products = () => {
     })();
   }, []);
 
-  const handleAddToCart = async (product) => {
-    if (!token) {
-      toast.error("Please login to add items to cart");
-      return navigate("/login");
-    }
+ const handleAddToCart = async (product) => {
+  addToCart({
+    productId: String(product._id),  // ✅ id ki jagah productId
+    name: product.name,
+    price: product.price,
+    image: product.image,
+  });
 
-    addToCart({
-      id: product._id,
-      name: product.name,
-      price: product.price,
-      image: product.image
-    });
-
+  // Agar user logged in hai → backend sync bhi karna
+  if (token) {
     try {
       await axios.post(
         `https://api.tastycrunchmakhana.com/api/cart/add`,
         {
-          product: { productId: product._id, name: product.name, price: product.price, image: product.image, quantity: 1 }
+          product: {
+            productId: String(product._id),
+            name: product.name,
+            price: product.price,
+            image: product.image,
+            quantity: 1,
+          },
         },
         { headers: authHeaders() }
       );
-      toast.success(`${product.name} added to cart`);
     } catch (err) {
       toast.error("Failed to sync with server");
     }
-  };
+  }
+
+  toast.success(`${product.name} added to cart`);
+};
+
 
   const handleBuyNow = (product) => navigate("/checkout", { state: { product } });
 

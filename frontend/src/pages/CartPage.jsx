@@ -9,33 +9,52 @@ import { authHeaders } from "../../utils/api";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
-  const { setCart } = useCart(); // sync with context
+   const { cart, setCart, removeFromCart } = useCart();
 
-  const fetchCart = async () => {
-    try {
-      const { data } = await axios.get(`https://api.tastycrunchmakhana.com/api/cart`, { headers: authHeaders() });
-      setCartItems(data.products || []);
-      setCart(data.products || []); // sync with context
-    } catch {
-      toast.error("Failed to load cart");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Logged-in → backend se fetch
+      axios.get(`https://api.tastycrunchmakhana.com/api/cart`, { headers: authHeaders() })
+        .then(({ data }) => {
+          setCartItems(data.products || []);
+          setCart(data.products || []);
+        })
+        .catch(() => toast.error("Failed to load cart"));
+    } else {
+      // Guest → localStorage se
+      setCartItems(cart);
     }
-  };
+  }, [cart]);
 
   const handleRemove = async (productId) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    // Logged-in
     try {
-      const { data } = await axios.post(`https://api.tastycrunchmakhana.com/api/cart/remove`, { productId }, { headers: authHeaders() });
+      const { data } = await axios.post(
+        `https://api.tastycrunchmakhana.com/api/cart/remove`,
+        { productId },
+        { headers: authHeaders() }
+      );
       setCartItems(data.products || []);
-      setCart(data.products || []); // update context so Navbar badge updates
+      setCart(data.products || []);
       toast.success("Item removed");
     } catch {
       toast.error("Failed to remove item");
     }
-  };
+  } else {
+    // Guest
+    removeFromCart(productId);
+    setCartItems(cart.filter(item => item.productId !== productId));
+    toast.success("Item removed");
+  }
+};
 
   const calculateTotal = () =>
     cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  useEffect(() => { fetchCart(); }, []);
+  // useEffect(() => { fetchCart(); }, []);
 
   const proceedToCheckout = () => {
     if (cartItems.length === 0) return toast.error("Your cart is empty");
@@ -49,8 +68,8 @@ const Cart = () => {
         <div className="text-center text-gray-600 text-lg">Your cart is empty.</div>
       ) : (
         <div className="max-w-5xl mx-auto space-y-6">
-          {cartItems.map((item) => (
-            <div key={item.productId} className="flex flex-col sm:flex-row items-center bg-white shadow-lg rounded-2xl p-4 gap-4">
+          {cartItems.map((item,index) => (
+            <div key={`${item.productId || item.name}-${index}`} className="flex flex-col sm:flex-row items-center bg-white shadow-lg rounded-2xl p-4 gap-4">
               <img src={item.image} alt={item.name} className="w-full sm:w-32 h-32 object-cover rounded-xl" />
               <div className="flex-1 w-full">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -74,4 +93,3 @@ const Cart = () => {
 };
 
 export default Cart;
-

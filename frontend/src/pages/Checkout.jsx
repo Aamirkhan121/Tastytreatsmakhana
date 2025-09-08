@@ -355,7 +355,7 @@
  // src/components/Checkout.jsx
 // src/pages/Checkout.jsx
 // src/pages/Checkout.jsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -371,15 +371,63 @@ const loadRazorpayScript = () =>
   });
 
 const Checkout = () => {
-  const { state } = useLocation();
+  const { state:navState } = useLocation();
+  const [normalizedCartItems, setNormalizedCartItems] = useState([]);
   const navigate = useNavigate();
+  
+
+
+  const savedState = localStorage.getItem("checkoutState");
+  const parsedState = savedState ? JSON.parse(savedState) : null;
+  // Merge navState and savedState
+const state = {
+  mode: navState?.mode || parsedState?.mode || "cart",
+  cartItems: navState?.cartItems || parsedState?.cartItems || [],
+  product: navState?.product || parsedState?.product || null,
+  quantity: navState?.quantity || parsedState?.quantity || 1,
+  formData: navState?.formData || parsedState?.formData || { name: "", email: "", phone: "", address: "" },
+};
+const mode = state.mode;
+const cartItemsFromState = state.cartItems;
+
+  // ----------------------------
+// Normalize cartItems to fix id/productId mismatch
+useEffect(() => {
+  if (state.mode === "cart") {
+    const temp = state.cartItems || [];
+    const normalized = temp.map(item => ({
+      productId: item.productId || item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      quantity: item.quantity
+    }));
+
+    const merged = [];
+    normalized.forEach(item => {
+      const existing = merged.find(i => i.productId === item.productId);
+      if (existing) existing.quantity += item.quantity;
+      else merged.push(item);
+    });
+
+    setNormalizedCartItems(merged);
+  }
+}, [mode,cartItemsFromState]);
+
+
+  // useEffect(() => {
+  //   if (parsedState) {
+  //     localStorage.removeItem("checkoutState");
+  //   } 
+  // }, []);
 
   // Modes:
   // - Single: state.product provided
   // - Cart:   state.mode === "cart" and state.cartItems provided
-  const product = state?.product || null;
-  const cartItems = state?.mode === "cart" ? (state?.cartItems || []) : [];
-  const isCartMode = !!cartItems.length;
+  const cartItems = normalizedCartItems;
+const isCartMode = !!cartItems.length;
+const product = state?.product || null;
+
 
   const [quantity, setQuantity] = useState(state?.quantity || 1);
   const [formData, setFormData] = useState(state?.formData || {
@@ -419,9 +467,12 @@ const Checkout = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("Please login to place your order");
-      navigate("/login", { state: { from: "/checkout", ...state } });
+      localStorage.setItem("checkoutState", JSON.stringify ({ product, cartItems, quantity, formData, mode: isCartMode ? "cart" : "single" }));
+      console.log("Saved checkout state:", { product, cartItems, quantity, formData, mode: isCartMode ? "cart" : "single" });
+      navigate("/login", { state: { from: "/checkout" } });
       return false;
     }
+  
     return true;
   };
 
@@ -439,6 +490,7 @@ const Checkout = () => {
         await axios.post(`https://api.tastycrunchmakhana.com/api/orders/create`, {
           items, name, email, phone, address, paymentMethod: "COD"
         }, { headers: authHeaders() });
+        localStorage.removeItem("cart");
       } else {
         // single product
         await axios.post(`https://api.tastycrunchmakhana.com/api/orders/create`, {
@@ -449,7 +501,12 @@ const Checkout = () => {
         }, { headers: authHeaders() });
       }
       toast.success("Order placed with Cash on Delivery!");
-      navigate("/my-orders");
+      localStorage.removeItem("checkoutState");
+      setTimeout(() => {
+  window.location.reload();
+}, 50);
+      navigate("/my-orders", {  state: { fromCheckout: true } });
+     
     } catch (err) {
       toast.error(err?.response?.data?.message || "Failed to place order");
     }
@@ -508,6 +565,7 @@ const Checkout = () => {
               }, { headers: authHeaders() });
             }
             toast.success("Payment successful!");
+            localStorage.removeItem("checkoutState");
             navigate("/my-orders");
           } catch (e) {
             toast.error("Order placement failed after payment");
@@ -533,8 +591,8 @@ const Checkout = () => {
         <div className="flex flex-col gap-4 mb-6">
           {isCartMode ? (
             <div className="space-y-3">
-              {cartItems.map((it) => (
-                <div key={it.productId} className="flex items-center justify-between">
+              {cartItems.map((it,index) => (
+                <div key={it.productId || it.id || index}  className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <img src={it.image} alt={it.name} className="w-14 h-14 rounded-lg object-cover" />
                     <div>

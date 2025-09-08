@@ -52,7 +52,8 @@ const App = () => {
         {/* <Route path="/about" element={<ProtectedRoute> <About/> </ProtectedRoute>} /> */}
         {/* <Route path="/products" element={<ProtectedRoute> <Product/> </ProtectedRoute>} /> */}
         {/* <Route path="/products/:productId" element={<ProtectedRoute><ProductDetails /></ProtectedRoute>} /> */}
-        <Route path="/cart" element={<ProtectedRoute> <CartPage/> </ProtectedRoute>} />
+        <Route path="/cart" element={ <CartPage/>} />
+        {/* <Route path="/cart" element={<ProtectedRoute> <CartPage/> </ProtectedRoute>} /> */}
            {/* <Route path="/my-orders" element={<ProtectedRoute> <MyOrder /> </ProtectedRoute>} />  */}
            {/* <Route  path="/profile"  element={<ProtectedRoute> <ProfilePage /> </ProtectedRoute> }/> */}
         <Route path="/" element={ <Home/>  } />
