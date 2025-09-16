@@ -35,10 +35,10 @@ const ProductForm = () => {
     e.preventDefault();
     try {
       if (id) {
-        await axios.put(`https://tastytreatsmakhana.onrender.com/api/products/${id}`, formData);
+        await axios.put(`https://api.tastycrunchmakhana.com/api/products/${id}`, formData);
         alert("Product updated!");
       } else {
-        await axios.post("https://tastytreatsmakhana.onrender.com/api/products", formData);
+        await axios.post("https://api.tastycrunchmakhana.com/api/products", formData);
         alert("Product created!");
       }
       navigate("/admin/products");
