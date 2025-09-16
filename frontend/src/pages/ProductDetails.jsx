@@ -28,6 +28,7 @@ Black pepper
     const fetchProductDetails = async () => {
       try {
         const res = await axios.get(`https://api.tastycrunchmakhana.com/api/products/${slug}`);
+        console.log(res.data);
         setProducts(res.data);
         setMainImage(res.data.image);
       } catch (err) {
@@ -175,16 +176,7 @@ Black pepper
                 <p className="text-3xl font-bold text-orange-600">₹{products.price}</p>
             <p className="text-lg text-gray-700 font-medium" style={{ whiteSpace: 'pre-line' }}>
   {products.slug === "navratri-upwas-combo" 
-    ? `Celebrate this Navratri with guilt-free, crunchy, and delicious Tasty Crunch Roasted Makhana. Packed with flavor and nutrition.
-
-Our Combo Pack of 3 brings you the perfect festive snacking experience at a special price!
-
-Flavours
-Himalayan salted
-Creamy cheese
-Black pepper
-
-1 pack = 60 Grams`
+    ? descriptionText
     : products.description // baaki products ka description backend se
   }
 </p>
