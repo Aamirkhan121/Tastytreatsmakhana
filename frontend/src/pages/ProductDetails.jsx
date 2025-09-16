@@ -162,7 +162,14 @@ const ProductDetails = () => {
                 transition={{ delay: 0.4 }}
               >
                 <p className="text-3xl font-bold text-orange-600">₹{products.price}</p>
-                <p className="text-lg text-gray-700 font-medium" style={{ whiteSpace: 'pre-line' }}>{products.description}</p>
+                <div className="text-lg text-gray-700 font-medium">
+  {products.description.split('\n').map((line, index) => (
+    <React.Fragment key={index}>
+      {line}
+      <br />
+    </React.Fragment>
+  ))}
+</div>
 
                 {/* Rating */}
                 <div className="flex items-center space-x-2">
