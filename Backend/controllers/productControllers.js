@@ -51,16 +51,18 @@ const createProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-  const { name, image, description, price } = req.body;
+  const { name, image, description, price, extraImages, slug } = req.body;
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
     product.name = name;
+    product.slug = slug;
     product.image = image;
     product.description = description;
     product.price = price;
+    product.extraImages = extraImages;
     const updatedProduct = await product.save();
     res.json(updatedProduct);
   } catch (err) {
