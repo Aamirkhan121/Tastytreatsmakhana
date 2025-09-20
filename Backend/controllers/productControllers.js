@@ -33,9 +33,10 @@ const getProductBySlug = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  const { name, image, description, price,extraImages  } = req.body;
+  const { name, image, description, price,extraImages,slug  } = req.body;
   const product = new Product({
     name,
+    slug,
     image,
     description,
     price,

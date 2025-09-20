@@ -34,11 +34,29 @@ const ProductForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // ✅ Auto-generate slug from name
+      const slug = formData.name
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "");
+
+      // ✅ Convert extraImages string into array
+      const dataToSend = {
+        ...formData,
+        price: Number(formData.price),
+        slug,
+        extraImages: formData.extraImages
+          ? formData.extraImages.split(",").map((img) => img.trim())
+          : []
+      };
+
+       console.log("📤 Sending Data:", dataToSend); // 🟢 Debug karo yaha
+
       if (id) {
-        await axios.put(`https://tastytreatsmakhana.onrender.com/api/products/${id}`, formData);
+        await axios.put(`https://api.tastycrunchmakhana.com/api/products/${id}`, dataToSend);
         alert("Product updated!");
       } else {
-        await axios.post("https://tastytreatsmakhana.onrender.com/api/products", formData);
+        await axios.post("https://api.tastycrunchmakhana.com/api/products", dataToSend);
         alert("Product created!");
       }
       navigate("/admin/products");
