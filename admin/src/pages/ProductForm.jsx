@@ -50,6 +50,7 @@ const ProductForm = () => {
       // ✅ Convert extraImages string into array
       const dataToSend = {
         ...formData,
+        price: Number(formData.price), // ✅ ensure number
         slug,
         extraImages: formData.extraImages
           ? formData.extraImages.split(",").map((img) => img.trim())
