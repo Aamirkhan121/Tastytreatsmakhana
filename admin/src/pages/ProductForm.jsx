@@ -17,11 +17,18 @@ const ProductForm = () => {
   // For edit
   useEffect(() => {
     if (id) {
-      axios.get(`https://api.tastycrunchmakhana.com/api/products/${id}`).then((res) => {
-        setFormData(res.data);
-      });
+      axios
+        .get(`https://tastytreatsmakhana.onrender.com/api/products/${id}`)
+        .then((res) => {
+          setFormData({
+            ...res.data,
+            extraImages: res.data.extraImages?.join(", ") || ""
+          });
+        })
+        .catch((err) => console.error("Failed to fetch product", err));
     }
   }, [id]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,24 +41,6 @@ const ProductForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // ✅ Auto-generate slug from name
-      const slug = formData.name
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9-]/g, "");
-
-      // ✅ Convert extraImages string into array
-      const dataToSend = {
-        ...formData,
-        price: Number(formData.price),
-        slug,
-        extraImages: formData.extraImages
-          ? formData.extraImages.split(",").map((img) => img.trim())
-          : []
-      };
-
-       console.log("📤 Sending Data:", dataToSend); // 🟢 Debug karo yaha
-
       if (id) {
         await axios.put(`https://api.tastycrunchmakhana.com/api/products/${id}`, dataToSend);
         alert("Product updated!");
